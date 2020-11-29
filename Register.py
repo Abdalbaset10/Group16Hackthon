@@ -93,9 +93,9 @@ class Grids(GridLayout):
 
 
 
-class MyWidget(App):
+class Register(App):
     def build(self):
         return Grids()
 
 
-MyWidget().run()
+Register().run()
