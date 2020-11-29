@@ -13,13 +13,15 @@ from kivy.uix.popup import Popup
 from kivy.uix.label import Label
 from kivy.uix.button import Button
 
-New_User_list = ["ID", "Username", "Password", "Title"]
+New_User_list = ["ID","Full Name","Date of Birth", "Username", "Password"]
 
 
 
 
 
-delete_User_list = [-1, -1, -1, -1]
+
+
+delete_User_list = [-1, -1, -1, -1,-1 ,-1]
 
 
 def new_user():
@@ -42,25 +44,30 @@ def find_user(person):
         return 0
 
 
+
 class Grids(GridLayout):
     def __init__(self, **kwargs):
         super(Grids, self).__init__(**kwargs)
         self.cols = 1
-        self.add_widget(Label(text="ID: "))
+        self.add_widget(Label(text="Full Name: "))
         self.name = TextInput(multiline=False)
         self.add_widget(self.name)
 
+        self.add_widget(Label(text="ID: "))
+        self.ID = TextInput(multiline=False)
+        self.add_widget(self.ID)
+
+        self.add_widget(Label(text="Date of birth dd/mm/yyyy: "))
+        self.date_of_birth = TextInput(multiline=False)
+        self.add_widget(self.date_of_birth)
+
         self.add_widget(Label(text="Username: "))
-        self.Username = TextInput(multiline=False)
-        self.add_widget(self.Username)
+        self.username = TextInput(multiline=False)
+        self.add_widget(self.username)
 
         self.add_widget(Label(text="Password: "))
-        self.Password = TextInput(multiline=False)
-        self.add_widget(self.Password)
-
-        self.add_widget(Label(text="Title: "))
-        self.Title = TextInput(multiline=False)
-        self.add_widget(self.Title)
+        self.password = TextInput(multiline=False)
+        self.add_widget(self.password)
 
         self.submit = Button(text="Register", font_size=25)
         self.submit.bind(on_press=self.create_user)
@@ -68,19 +75,22 @@ class Grids(GridLayout):
 
     def create_user(self,instance):
 
-        New_User_list[0] = self.name.text
+        New_User_list[0] = self.ID.text
 
         if find_user(New_User_list[0]) == 0:
-
-            New_User_list[1] = self.Username.text
-
-            New_User_list[2] = self.Password.text
-
-            New_User_list[3] = self.Title.text
+            New_User_list[0] = self.ID.text
+            New_User_list[1] = self.name.text
+            New_User_list[2] = self.date_of_birth.text
+            New_User_list[3] = self.username.text
+            New_User_list[4] = self.password.text
 
             new_user()
         else:
-            print("already registered")
+            pop=Popup(title='already existing',content=Label(text="already existing user"),size=(200,170))
+            pop.open()
+
+
+
 
 
 class MyWidget(App):
@@ -89,7 +99,3 @@ class MyWidget(App):
 
 
 MyWidget().run()
-
-New_User_list = [1, 2, 3, 4]
-
-delete_User_list = [-1, -1, -1, -1]
