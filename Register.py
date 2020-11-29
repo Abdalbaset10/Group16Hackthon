@@ -98,4 +98,8 @@ class Register(App):
         return Grids()
 
 
-Register().run()
+def register():
+    Register().run()
+
+
+
