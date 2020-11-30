@@ -12,6 +12,7 @@ from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.uix.popup import Popup
 from kivy.properties import ObjectProperty
 import csv
+import panda
 
 New_User_list = ["ID", "Full Name", "Date of Birth", "Username", "Password"]
 
@@ -36,6 +37,17 @@ def find_user(person):
         return 1
     else:
         return 0
+
+
+
+def find_username(person):
+    find_user_flag = 0
+    with open('data.csv', 'r') as data_file:
+        for line in data_file:
+            data = line.split(",")
+            find_user_flag +=1
+            if data[3] == str(person):
+                return find_user_flag
 
 
 class HomeWindo(Screen):
@@ -73,20 +85,11 @@ class Loginwindo(Screen):
     password = ObjectProperty(None)
 
     def logbtn(self):
-        grant_access=0
-        with open('data.csv', 'r') as data_file:
-            usercheck = 0
-            passcheck = 0
-            for line in data_file:
-                data = line.split(",")
-                usercheck+=1
-                passcheck = usercheck
-                if data[3] == str(self.username) and data[4]==str(self.password):
-                    grant_access=1
-        if grant_access==1:
-            pass
-        else:
-            print("false")
+        data=panda.read_csv(r'data.csv')
+        df=panda.DataFrame(data,columns=['ID','Full Name','Date of Birth','Username','Password'])
+        print(df)
+        pass
+
 
 
 

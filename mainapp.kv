@@ -82,6 +82,8 @@ WindowManger:
 
 <Loginwindo>
     name:"Login"
+    username:Username
+    password:PassE
     GridLayout:
         cols:1
         Label:
@@ -110,8 +112,8 @@ WindowManger:
             Button:
                 text:"Login"
                 on_release:
-                    app.root.current="MangerLog"
-                    root.manager.transition.direction="left"
+                    root.logbtn()
+
 
 
 <MangerLog>
