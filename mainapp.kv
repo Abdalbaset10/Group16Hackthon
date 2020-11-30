@@ -4,6 +4,7 @@ WindowManger:
     Loginwindo:
     MangerLog:
     MangerDuser:
+    UserPage:
 
 <HomeWindo>
     name:"Home"
@@ -113,8 +114,7 @@ WindowManger:
             Button:
                 text:"Login"
                 on_release:
-                    app.root.current="MangerLog"
-                    root.manager.transition.direction="left"
+                    root.logbtn()
 
 
 <MangerLog>
@@ -130,9 +130,9 @@ WindowManger:
         GridLayout:
             cols:2
             Button:
-                text:"Back"
+                text:"Log out"
                 on_release:
-                    app.root.current="log out"
+                    app.root.current="Home"
                     root.manager.transition.direction="right"
             Button:
                 text:"Delete User"
@@ -146,6 +146,7 @@ WindowManger:
             Button:
                 text:"nothing"
                 on_release:
+
 
             Button:
                 text:"nothing"
@@ -176,4 +177,11 @@ WindowManger:
                 text:"Delete"
                 on_release:
 
+
+<UserPage>
+    name:"UserPage"
+    GridLayout:
+        cols:1
+        Label:
+            text:"Welcome"
 
