@@ -7,6 +7,51 @@ from kivy.uix.button import Button
 from kivy.uix.widget import Widget
 from kivy.config import Config
 from kivy.uix.relativelayout import RelativeLayout
+from kivy.lang import Builder
+from kivy.uix.screenmanager import ScreenManager,Screen
+from kivy.uix.popup import Popup
+from kivy.properties import ObjectProperty
+
+
+
+
+class HomeWindo(Screen):
+    pass
+
+class RegiWindo(Screen):
+    idn = ObjectProperty(None)
+    fullname = ObjectProperty(None)
+    dob = ObjectProperty(None)
+    username = ObjectProperty(None)
+    password = ObjectProperty(None)
+
+    def regibtn(self):
+        if self.idn.text !='' and self.fullname.text !='' and self.dob.text !='' and self.username.text !='' and self.password.text !='':
+            print("Done")
+        else:
+            print("HEY")
+            invalidForm()
+
+
+
+
+
+class Loginwindo(Screen):
+    pass
+
+
+class MangerLog(Screen):
+    pass
+
+class WindowManger(ScreenManager):
+    pass
+kv=Builder.load_file("mainapp.kv")
+WM=WindowManger()
+
+
+def invalidForm():
+    pop = Popup(title='Invalid Form', content=Label(text='Please fill in all inputs with valid information.'),size_hint=(None, None), size=(400, 400))
+    pop.open()
 
 
 
@@ -14,22 +59,17 @@ from kivy.uix.relativelayout import RelativeLayout
 
 
 
-class MyApp(App):
+
+
+
+class MyMainApp(App):
     def build(self):
 
-        r1 = RelativeLayout(size=(10, 10))
-        t1 = Label(text="Welcome to School App",pos_hint ={'center_x':.5, 'center_y':.8},size_hint=(1, 1))
-        b1 = Button(size_hint=(.1,.1),pos_hint ={'center_x':.9, 'center_y':.6},text="Register")
-        b2 = Button(size_hint=(.1, .1), pos_hint={'center_x': .9, 'center_y': .4}, text="Login")
-        r1.add_widget(t1)
-        r1.add_widget(b1)
-        r1.add_widget(b2)
-        return r1
-
+       return kv
 
 
 
 
 
 if __name__ == '__main__':
-    MyApp().run()
+    MyMainApp().run()
