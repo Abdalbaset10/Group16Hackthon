@@ -2,6 +2,7 @@ WindowManger:
     HomeWindo:
     RegiWindo:
     Loginwindo:
+    MangerLog:
 
 <HomeWindo>
     name:"Home"
@@ -23,6 +24,11 @@ WindowManger:
 
 <RegiWindo>
     name:"Register"
+    idn:idnum
+    fullname:F_name
+    dob:date
+    username:Username
+    password:Pass
     GridLayout:
         cols:1
         Label:
@@ -33,7 +39,7 @@ WindowManger:
             Label:
                 text:"ID number"
             TextInput:
-                id:ID
+                id:idnum
                 multiline:False
             Label:
                 text:"Full Name"
@@ -68,6 +74,10 @@ WindowManger:
                 text:"Submit"
                 size_hint:0.5,0.5
                 on_release:
+                    root.regibtn()
+                    app.root.current="Login"
+
+
 
 
 <Loginwindo>
@@ -99,4 +109,39 @@ WindowManger:
                     root.manager.transition.direction="right"
             Button:
                 text:"Login"
+                on_release:
+                    app.root.current="MangerLog"
+                    root.manager.transition.direction="left"
+
+
+<MangerLog>
+    name:"MangerLog"
+    GridLayout:
+        cols:1
+        Label:
+            text:"Manager Main Page"
+        GridLayout:
+            cols:2
+
+
+        GridLayout:
+            cols:2
+            Button:
+                text:"Back"
+                on_release:
+                    app.root.current="Home"
+                    root.manager.transition.direction="right"
+            Button:
+                text:"Delete User"
+                on_release:
+
+
+        GridLayout:
+            cols:2
+            Button:
+                text:"nothing"
+                on_release:
+
+            Button:
+                text:"nothing"
                 on_release:
