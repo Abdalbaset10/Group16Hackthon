@@ -98,3 +98,12 @@ def register():
 
 
 
+def test():
+    newFile = open('data.csv', 'r')
+    for line in newFile:
+        data = line.split(",")
+        print("_____________________________________________")
+        print(data[1])
+
+
+
