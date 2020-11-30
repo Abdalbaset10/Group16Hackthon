@@ -56,9 +56,9 @@ class RegiWindo(Screen):
             if find_user(New_User_list[0]) == 0:
                 New_User_list[0] = self.username.text
                 New_User_list[1] = self.password.text
-                New_User_list[4] = self.fullname.text
+                New_User_list[2] = self.fullname.text
                 New_User_list[3] = self.idn.text
-                New_User_list[2] = self.dob.text
+                New_User_list[4] = self.dob.text
 
                 new_user()
             print("True")
