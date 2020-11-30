@@ -1,6 +1,12 @@
 import kivy
 from kivy.app import App
 from kivy.uix.label import Label
+from kivy.uix.gridlayout import GridLayout
+from kivy.uix.textinput import TextInput
+from kivy.uix.button import Button
+from kivy.uix.widget import Widget
+from kivy.config import Config
+from kivy.uix.relativelayout import RelativeLayout
 from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.uix.popup import Popup
@@ -8,6 +14,7 @@ from kivy.properties import ObjectProperty
 import csv
 New_User_list = ["Username", "Password","Full Name" ,"ID" , "Date of Birth"]
 
+delete_User_list = [-1, -1, -1, -1, -1, -1]
 
 
 def new_user():
@@ -84,7 +91,7 @@ class Loginwindo(Screen):
             else:
                 print("Normal User")
                 AccessGrant = 0
-                WM.current="Home"
+                WM.current="UserPage"
 
         else:
             print("Access Denied")
@@ -108,10 +115,12 @@ class MangerDuser(Screen):
 class WindowManger(ScreenManager):
     pass
 
+class UserPage(Screen):
+    pass
 
 kv = Builder.load_file("mainapp.kv")
 WM = WindowManger()
-screens=[HomeWindo(name="Home"),RegiWindo(name="Register"),Loginwindo(name="Login"),MangerLog(name="MangerLog"),MangerDuser(name="MangerDuser")]
+screens=[HomeWindo(name="Home"),RegiWindo(name="Register"),Loginwindo(name="Login"),MangerLog(name="MangerLog"),MangerDuser(name="MangerDuser"),UserPage(name="UserPage")]
 for screens in screens:
     WM.add_widget(screens)
 
@@ -122,10 +131,10 @@ def invalidForm():
     pop.open()
 
 
-class MyMainApp(App):
+class SchoolApp(App):
     def build(self):
         return WM
 
 
 if __name__ == '__main__':
-    MyMainApp().run()
+    SchoolApp().run()
