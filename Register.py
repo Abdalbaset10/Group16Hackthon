@@ -16,11 +16,6 @@ from kivy.uix.button import Button
 New_User_list = ["ID","Full Name","Date of Birth", "Username", "Password"]
 
 
-
-
-
-
-
 delete_User_list = [-1, -1, -1, -1,-1 ,-1]
 
 

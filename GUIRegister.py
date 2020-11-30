@@ -11,6 +11,8 @@ from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager,Screen
 from kivy.uix.popup import Popup
 from kivy.properties import ObjectProperty
+import csv
+
 
 
 
@@ -27,9 +29,10 @@ class RegiWindo(Screen):
 
     def regibtn(self):
         if self.idn.text !='' and self.fullname.text !='' and self.dob.text !='' and self.username.text !='' and self.password.text !='':
-            print("Done")
+            print("True")
+
         else:
-            print("HEY")
+            print("False")
             invalidForm()
 
 
@@ -37,16 +40,27 @@ class RegiWindo(Screen):
 
 
 class Loginwindo(Screen):
-    pass
+    username = ObjectProperty(None)
+    password = ObjectProperty(None)
+    def logbtn(self):
+        pass
+
+
+
 
 
 class MangerLog(Screen):
+    pass
+
+class MangerDuser(Screen):
+    userid=ObjectProperty(None)
     pass
 
 class WindowManger(ScreenManager):
     pass
 kv=Builder.load_file("mainapp.kv")
 WM=WindowManger()
+
 
 
 def invalidForm():
