@@ -10,21 +10,42 @@ from kivy.uix.relativelayout import RelativeLayout
 
 import Register
 
-class Widgets(GridLayout):
-    def __init__(self):
+class Grids(GridLayout):
+    def __init__(self, **kwargs):
+        super(Grids, self).__init__(**kwargs)
+
+        self.cols = 1
+        self.add_widget(Label(text="Full Name: "))
+        self.name = TextInput(multiline=False)
+        self.add_widget(self.name)
+
+        self.add_widget(Label(text="ID: "))
+        self.ID = TextInput(multiline=False)
+        self.add_widget(self.ID)
+
+        self.add_widget(Label(text="Date of birth dd/mm/yyyy: "))
+        self.date_of_birth = TextInput(multiline=False)
+        self.add_widget(self.date_of_birth)
+
+        self.add_widget(Label(text="Username: "))
+        self.username = TextInput(multiline=False)
+        self.add_widget(self.username)
+
+        self.add_widget(Label(text="Password: "))
+        self.password = TextInput(multiline=False)
+        self.add_widget(self.password)
+
         self.submit = Button(text="Register", font_size=25)
-        self.submit.bind(on_press= Register.register)
+       # self.submit.bind(on_press=self.create_user)
         self.add_widget(self.submit)
 
 
 
-
-
-
-class HomePage(App):
+class Register(App):
     def build(self):
-        return Widgets()
+        return Grids()
 
 
+def regis():
+    Register().run()
 
-HomePage().run()

@@ -25,7 +25,7 @@ delete_User_list = [-1, -1, -1, -1,-1 ,-1]
 
 
 def new_user():
-    with open('data.csv', 'a') as data_file:
+    with open('../Newgithub/Group16Hackthon-Morad_Hackthon/data.csv', 'a') as data_file:
         writer = csv.writer(data_file)
         writer.writerow(New_User_list)
         data_file.flush()
@@ -33,7 +33,7 @@ def new_user():
 
 def find_user(person):
     find_user_flag = 0
-    with open('data.csv', 'r') as data_file:
+    with open('../Newgithub/Group16Hackthon-Morad_Hackthon/data.csv', 'r') as data_file:
         for line in data_file:
             data = line.split(",")
             if data[0] == str(person):
