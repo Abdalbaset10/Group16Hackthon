@@ -10,6 +10,7 @@ from kivy.uix.relativelayout import RelativeLayout
 
 import Register
 
+
 class Grids(GridLayout):
     def __init__(self, **kwargs):
         super(Grids, self).__init__(**kwargs)
@@ -36,9 +37,8 @@ class Grids(GridLayout):
         self.add_widget(self.password)
 
         self.submit = Button(text="Register", font_size=25)
-       # self.submit.bind(on_press=self.create_user)
+        # self.submit.bind(on_press=self.create_user)
         self.add_widget(self.submit)
-
 
 
 class Register(App):
@@ -48,4 +48,3 @@ class Register(App):
 
 def regis():
     Register().run()
-

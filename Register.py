@@ -13,15 +13,9 @@ from kivy.uix.popup import Popup
 from kivy.uix.label import Label
 from kivy.uix.button import Button
 
-New_User_list = ["ID","Full Name","Date of Birth", "Username", "Password"]
+New_User_list = ["ID", "Full Name", "Date of Birth", "Username", "Password"]
 
-
-
-
-
-
-
-delete_User_list = [-1, -1, -1, -1,-1 ,-1]
+delete_User_list = [-1, -1, -1, -1, -1, -1]
 
 
 def new_user():
@@ -42,7 +36,6 @@ def find_user(person):
         return 1
     else:
         return 0
-
 
 
 class Grids(GridLayout):
@@ -73,7 +66,7 @@ class Grids(GridLayout):
         self.submit.bind(on_press=self.create_user)
         self.add_widget(self.submit)
 
-    def create_user(self,instance):
+    def create_user(self, instance):
 
         New_User_list[0] = self.ID.text
 
@@ -86,11 +79,8 @@ class Grids(GridLayout):
 
             new_user()
         else:
-            pop=Popup(title='already existing',content=Label(text="already existing user"),size=(200,170))
+            pop = Popup(title='already existing', content=Label(text="already existing user"), size=(200, 170))
             pop.open()
-
-
-
 
 
 class Register(App):
@@ -100,6 +90,3 @@ class Register(App):
 
 def register():
     Register().run()
-
-
-
