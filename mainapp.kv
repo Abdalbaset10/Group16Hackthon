@@ -3,6 +3,8 @@ WindowManger:
     RegiWindo:
     Loginwindo:
     MangerLog:
+    MangerDuser:
+    UserPage:
 
 <HomeWindo>
     name:"Home"
@@ -75,7 +77,7 @@ WindowManger:
                 size_hint:0.5,0.5
                 on_release:
                     root.regibtn()
-                    app.root.current="Login"
+
 
 
 
@@ -115,7 +117,6 @@ WindowManger:
                     root.logbtn()
 
 
-
 <MangerLog>
     name:"MangerLog"
     GridLayout:
@@ -129,13 +130,15 @@ WindowManger:
         GridLayout:
             cols:2
             Button:
-                text:"Back"
+                text:"Log out"
                 on_release:
                     app.root.current="Home"
                     root.manager.transition.direction="right"
             Button:
                 text:"Delete User"
                 on_release:
+                    app.root.current="MangerDuser"
+                    root.manager.transition.direction="left"
 
 
         GridLayout:
@@ -144,6 +147,41 @@ WindowManger:
                 text:"nothing"
                 on_release:
 
+
             Button:
                 text:"nothing"
                 on_release:
+
+<MangerDuser>
+    name:"MangerDuser"
+    GridLayout:
+        cols:1
+        Label:
+            text:"Delete Existing User"
+        GridLayout:
+            cols:2
+            Label:
+                text:"Enter User ID number"
+            TextInput:
+                id:ID
+                multiline:False
+
+        GridLayout:
+            cols:2
+            Button:
+                text:"Back"
+                on_release:
+                    app.root.current="MangerLog"
+                    root.manager.transition.direction="right"
+            Button:
+                text:"Delete"
+                on_release:
+
+
+<UserPage>
+    name:"UserPage"
+    GridLayout:
+        cols:1
+        Label:
+            text:"Welcome"
+

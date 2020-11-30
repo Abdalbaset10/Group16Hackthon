@@ -1,12 +1,6 @@
 import kivy
 from kivy.app import App
 from kivy.uix.label import Label
-from kivy.uix.gridlayout import GridLayout
-from kivy.uix.textinput import TextInput
-from kivy.uix.button import Button
-from kivy.uix.widget import Widget
-from kivy.config import Config
-from kivy.uix.relativelayout import RelativeLayout
 from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.uix.popup import Popup
@@ -14,7 +8,6 @@ from kivy.properties import ObjectProperty
 import csv
 New_User_list = ["Username", "Password","Full Name" ,"ID" , "Date of Birth"]
 
-delete_User_list = [-1, -1, -1, -1, -1, -1]
 
 
 def new_user():
@@ -75,9 +68,6 @@ class Loginwindo(Screen):
         AccessGrant = 0
         x=self.username.text
         y=self.password.text
-        print(x,y)
-
-
         with open('data.csv', 'r') as data_file:
             for line in data_file:
                 data = line.split(",")
