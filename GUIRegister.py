@@ -22,7 +22,7 @@ def new_user():
         writer = csv.writer(data_file)
         writer.writerow(New_User_list)
         data_file.flush()
-
+#this function to add new user to data base(csv file)
 
 def find_user(person):
     find_user_flag = 0
@@ -35,11 +35,10 @@ def find_user(person):
         return 1
     else:
         return 0
-
-
+#this function check if user is already in data base
 class HomeWindo(Screen):
     pass
-
+#class of the main screen see kv file
 
 class RegiWindo(Screen):
     idn = ObjectProperty(None)
@@ -65,7 +64,7 @@ class RegiWindo(Screen):
         else:
             print("False")
             invalidForm()
-
+#register screen take user input and check if its empty or in data base then store it
 
 class Loginwindo(Screen):
     username = ObjectProperty(None)
@@ -99,37 +98,38 @@ class Loginwindo(Screen):
         pass
 
 
-
+#login screen recive user input and verfy it
 
 
 
 class MangerLog(Screen):
     pass
-
+#Manger screen unfinshed bulid in kv file
 
 class MangerDuser(Screen):
     userid = ObjectProperty(None)
     pass
-
+#delete user screen unfinshed 
 
 class WindowManger(ScreenManager):
     pass
-
+#page Manger
 class UserPage(Screen):
     pass
+
 
 kv = Builder.load_file("mainapp.kv")
 WM = WindowManger()
 screens=[HomeWindo(name="Home"),RegiWindo(name="Register"),Loginwindo(name="Login"),MangerLog(name="MangerLog"),MangerDuser(name="MangerDuser"),UserPage(name="UserPage")]
 for screens in screens:
     WM.add_widget(screens)
-
+#List of screens in kv file
 
 def invalidForm():
     pop = Popup(title='Invalid Form', content=Label(text='Please fill in all inputs with valid information.'),
                 size_hint=(None, None), size=(400, 400))
     pop.open()
-
+#pop up massage for ivalid input
 
 class SchoolApp(App):
     def build(self):
