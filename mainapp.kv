@@ -183,5 +183,16 @@ WindowManger:
     GridLayout:
         cols:1
         Label:
-            text:"Welcome Student"
-
+            text:"Welcome User"
+        GridLayout:
+            cols:2
+            Button:
+                text:"Back"
+                on_release:
+                    app.root.current="Login"
+                    root.manager.transition.direction="right"
+            Button:
+                text:"Log OUT"
+                on_release:
+                    app.root.current="Home"
+                    root.manager.transition.direction="left"
