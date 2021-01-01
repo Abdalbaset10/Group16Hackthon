@@ -12,22 +12,22 @@ from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.uix.popup import Popup
 from kivy.properties import ObjectProperty
 import pyrebase
-import firebase_admin
-from firebase_admin import credentials
-from firebase_admin import auth
 
-cred = credentials.Certificate("C:/Users/Morad teaha/Downloads/project16-f346d-firebase-adminsdk-rav4x-1d4397cf7b.json")
+
+
 firebaseConfig = {
     'apiKey': "AIzaSyAxS1KDjH4OQrbw-k050yGJHQ8giCuyFDU",
     'authDomain': "project16-f346d.firebaseapp.com",
-    'databaseURL': "https://project16-f346d-default-rtdb.firebaseio.com",
+    'databaseURL': "https://project16-f346d-default-rtdb.firebaseio.com/",
     'projectId': "project16-f346d",
     'storageBucket': "project16-f346d.appspot.com",
     'messagingSenderId': "237946682699",
     'appId': "1:237946682699:web:59b0610e150f5c42b7bcce",
     'measurementId': "G-W8TSC422XT"}
 firebase=pyrebase.initialize_app(firebaseConfig)
+db=firebase.database()
 auth = firebase.auth()
+storage=firebase.storage()
 
 
 
@@ -56,12 +56,11 @@ class RegiWindo(Screen):
     def regibtn(self):
         if self.idn.text != '' and self.fullname.text != '' and self.dob.text != '' and self.email.text != '' and self.password.text != '':
             try:
-                New_User_list[0] = self.email.text
-                New_User_list[1] = self.password.text
-                New_User_list[2] = self.fullname.text
-                New_User_list[3] = self.idn.text
-                New_User_list[4] = self.dob.text
-                user=auth.create_user_with_email_and_password(self.email.text,self.password.text)
+                ##user=auth.create_user_with_email_and_password(self.email.text,self.password.text)
+                users_data={'Name':self.fullname.text,'IDnum':self.idn.text,'Email':self.email.text,'DOB':self.dob.text,'pass':self.password.text}
+                db.child("users").child(str(self.idn.text)).set(users_data)
+                if str(self.idn.text) == ("315198564"):
+                    db.child("users").child("315198564").update({'Title':'Manager'})
                 print("account created successfully")
             except:
                 invalidForm()
