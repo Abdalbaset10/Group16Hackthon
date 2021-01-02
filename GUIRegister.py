@@ -83,7 +83,7 @@ class RegiWindo(Screen):
     def regibtn(self):
         if self.idn.text != '' and self.fullname.text != '' and self.dob.text != '' and self.username.text != '' and self.password.text != '':
             if find_user(str(self.idn.text))==0:
-                users_data={'Name':self.fullname.text,'IDnum':self.idn.text,'Username':self.username.text,'DOB':self.dob.text,'pass':self.password.text}
+                users_data={'Name':self.fullname.text,'IDnum':self.idn.text,'Username':self.username.text,'DOB':self.dob.text,'pass':self.password.text,'Title':str('Student')}
                 db.child("users").child(str(self.idn.text)).set(users_data)
                 if str(self.idn.text) == ("315198564"):
                     db.child("users").child("315198564").update({'Title':'Manager'})
@@ -101,16 +101,25 @@ class Loginwindo(Screen):
     password = ObjectProperty(None)
 
     def logbtn(self):
+        logto=0
 
         if grantAccess(str(self.username.text),str(self.password.text))==1:
-            if str(self.username.text) == str("moradM"):
-                print("is Manager")
-                AccessGrant = 0
+            users = db.child("users").get()
+            for i in users.each():
+                if (str(self.username.text) == str(i.val()['Username'])) and (str(self.password.text) == str(i.val()['pass'])) and (str('Teacher') == str(i.val()['Title'])):
+                    print("is Teacher")
+                    logto=1
+                if (str(self.username.text) == str(i.val()['Username'])) and (str(self.password.text) == str(i.val()['pass'])) and (str('Manager') == str(i.val()['Title'])):
+                    print("is Manager")
+                    logto=2
+            if logto==1:
+                print("is Teacher")
+                WM.current = "TeacherLog"
+            if logto==2:
                 WM.current = "MangerLog"
-            else:
-                print("Normal User")
-                AccessGrant = 0
+            if logto==0:
                 WM.current = "UserPage"
+
         if grantAccess(str(self.username.text),str(self.password.text))==0 :
             invalidinFormation()
 
@@ -123,6 +132,8 @@ class Loginwindo(Screen):
 class MangerLog(Screen):
     pass
 
+class TeacherLog(Screen):
+    pass
 
 # Manger screen unfinshed bulid in kv file
 
@@ -183,7 +194,7 @@ class UserPage(Screen):
 
 kv = Builder.load_file("mainapp.kv")
 WM = WindowManger()
-screens = [HomeWindo(name="Home"), RegiWindo(name="Register"), Loginwindo(name="Login"), MangerLog(name="MangerLog"),
+screens = [HomeWindo(name="Home"), RegiWindo(name="Register"), Loginwindo(name="Login"), MangerLog(name="MangerLog"),TeacherLog(name="TeacherLog"),
            MangerDuser(name="MangerDuser"), UserPage(name="UserPage"),MangerMakeTeacher(name="MangerMakeTeacher"),PassReset(name="PassReset")]
 for screens in screens:
     WM.add_widget(screens)

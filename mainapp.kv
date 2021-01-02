@@ -6,6 +6,7 @@ WindowManger:
     MangerDuser:
     MangerMakeTeacher:
     UserPage:
+    TeacherLog:
     PassReset:
 
 <HomeWindo>
@@ -267,6 +268,43 @@ WindowManger:
                 on_release:
                     root.resetPass()
 
+
+<TeacherLog>
+    name:"TeacherLog"
+    GridLayout:
+        cols:1
+        Label:
+            text:"Teacher Main Page"
+        GridLayout:
+            cols:2
+
+
+        GridLayout:
+            cols:2
+            Button:
+                text:"Log out"
+                on_release:
+                    app.root.current="Home"
+                    root.manager.transition.direction="right"
+            Button:
+                text:"Delete User"
+                on_release:
+                    app.root.current="MangerDuser"
+                    root.manager.transition.direction="left"
+
+
+        GridLayout:
+            cols:2
+            Button:
+                text:"Make Teacher"
+                on_release:
+                    app.root.current="MangerMakeTeacher"
+                    root.manager.transition.direction="left"
+
+
+            Button:
+                text:"nothing"
+                on_release:
 
 <UserPage>
     name:"UserPage"
