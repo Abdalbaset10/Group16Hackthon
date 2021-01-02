@@ -4,7 +4,9 @@ WindowManger:
     Loginwindo:
     MangerLog:
     MangerDuser:
+    MangerMakeTeacher:
     UserPage:
+    PassReset:
 
 <HomeWindo>
     name:"Home"
@@ -112,6 +114,11 @@ WindowManger:
                     app.root.current="Home"
                     root.manager.transition.direction="right"
             Button:
+                text:"Forget password"
+                on_release:
+                    app.root.current="PassReset"
+                    root.manager.transition.direction="right"
+            Button:
                 text:"Login"
                 on_release:
                     root.logbtn()
@@ -144,8 +151,10 @@ WindowManger:
         GridLayout:
             cols:2
             Button:
-                text:"nothing"
+                text:"Make Teacher"
                 on_release:
+                    app.root.current="MangerMakeTeacher"
+                    root.manager.transition.direction="left"
 
 
             Button:
@@ -154,6 +163,7 @@ WindowManger:
 
 <MangerDuser>
     name:"MangerDuser"
+    identity:IDnum
     GridLayout:
         cols:1
         Label:
@@ -163,7 +173,7 @@ WindowManger:
             Label:
                 text:"Enter User ID number"
             TextInput:
-                id:ID
+                id:IDnum
                 multiline:False
 
         GridLayout:
@@ -174,8 +184,88 @@ WindowManger:
                     app.root.current="MangerLog"
                     root.manager.transition.direction="right"
             Button:
-                text:"Delete"
+                text:"delete"
                 on_release:
+                    root.deletebtn()
+
+<MangerMakeTeacher>
+    name:"MangerMakeTeacher"
+    identity:IDnum
+    subject:Sub
+    GridLayout:
+        cols:1
+        Label:
+            text:"Make teacher"
+        GridLayout:
+            cols:2
+            Label:
+                text:"Enter User ID number"
+            TextInput:
+                id:IDnum
+                multiline:False
+        GridLayout:
+            cols:2
+            Label:
+                text:"Enter Subject"
+            TextInput:
+                id:Sub
+                multiline:False
+
+        GridLayout:
+            cols:2
+            Button:
+                text:"Back"
+                on_release:
+                    app.root.current="MangerLog"
+                    root.manager.transition.direction="right"
+            Button:
+                text:"Make teacher"
+                on_release:
+                    root.MkTeacher()
+
+
+<PassReset>
+    name:"Password reset"
+    identity:IDnum
+    newp:newpass
+    dob:Dob
+    GridLayout:
+        cols:1
+        Label:
+            text:"Make teacher"
+        GridLayout:
+            cols:2
+            Label:
+                text:"Enter User ID number"
+            TextInput:
+                id:IDnum
+                multiline:False
+        GridLayout:
+            cols:2
+            Label:
+                text:"Enter Date of birth dd/mm/yyyy"
+            TextInput:
+                id:Dob
+                multiline:False
+        GridLayout:
+            cols:2
+            Label:
+                text:"Enter NewPassword"
+            TextInput:
+                id:newpass
+                multiline:False
+
+        GridLayout:
+            cols:2
+            Button:
+                text:"Back"
+                on_release:
+                    app.root.current="Home"
+                    root.manager.transition.direction="right"
+            Button:
+                text:"Confirm Reset"
+                on_release:
+                    root.resetPass()
 
 
 <UserPage>

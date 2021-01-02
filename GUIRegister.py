@@ -6,11 +6,13 @@ from kivy.uix.textinput import TextInput
 from kivy.uix.button import Button
 from kivy.uix.widget import Widget
 from kivy.config import Config
+from kivy.uix.scrollview import ScrollView
 from kivy.uix.relativelayout import RelativeLayout
 from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.uix.popup import Popup
 from kivy.properties import ObjectProperty
+from kivymd.uix.list import MDList,OneLineListItem
 import pyrebase
 
 
@@ -125,8 +127,47 @@ class MangerLog(Screen):
 # Manger screen unfinshed bulid in kv file
 
 class MangerDuser(Screen):
-    userid = ObjectProperty(None)
+    identity = ObjectProperty(None)
+    def deletebtn(self):
+        if find_user(str(self.identity.text))==0:
+            no_user()
+        else:
+            db.child("users").child(str(self.identity.text)).remove()
+            deletedS()
+            WM.current = "MangerLog"
     pass
+
+class MangerMakeTeacher(Screen):
+    identity = ObjectProperty(None)
+    subject = ObjectProperty(None)
+    def MkTeacher(self):
+        if find_user(str(self.identity.text))==0:
+            no_user()
+        else:
+            db.child("users").child(str(self.identity.text)).update({'Title':'Teacher'})
+            db.child("users").child(str(self.identity.text)).update({'Subject': str(self.subject.text)})
+            IsnowTeacher()
+            WM.current = "MangerLog"
+    pass
+
+
+class PassReset(Screen):
+    identity = ObjectProperty(None)
+    dob = ObjectProperty(None)
+    newp = ObjectProperty(None)
+    def resetPass(self):
+        if find_user(str(self.identity.text))==0:
+            no_user()
+        else:
+            users = db.child("users").get()
+            for i in users.each():
+                if (str(self.identity.text) == str(i.val()['IDnum'])) and (str(self.dob.text) == str(i.val()['DOB'])):
+                    db.child("users").child(str(self.identity.text)).update({'pass': str(self.newp.text)})
+                    changedsucc()
+                    WM.current = "Home"
+    pass
+
+
 
 
 # delete user screen unfinshed
@@ -143,7 +184,7 @@ class UserPage(Screen):
 kv = Builder.load_file("mainapp.kv")
 WM = WindowManger()
 screens = [HomeWindo(name="Home"), RegiWindo(name="Register"), Loginwindo(name="Login"), MangerLog(name="MangerLog"),
-           MangerDuser(name="MangerDuser"), UserPage(name="UserPage")]
+           MangerDuser(name="MangerDuser"), UserPage(name="UserPage"),MangerMakeTeacher(name="MangerMakeTeacher"),PassReset(name="PassReset")]
 for screens in screens:
     WM.add_widget(screens)
 
@@ -154,14 +195,31 @@ def invalidForm():
     pop = Popup(title='Invalid Form', content=Label(text='This Email already exist'),
                 size_hint=(None, None), size=(400, 400))
     pop.open()
-
-
-def invalidinFormation():
-    pop = Popup(title='Invalid info', content=Label(text='invalid email or password'),
+def changedsucc():
+    pop = Popup(title='Succeded', content=Label(text='Password changed successfully'),
                 size_hint=(None, None), size=(400, 400))
     pop.open()
 
 
+def invalidinFormation():
+    pop = Popup(title='Invalid info', content=Label(text='invalid information'),
+                size_hint=(None, None), size=(400, 400))
+    pop.open()
+
+def no_user():
+    pop = Popup(title='Error!', content=Label(text='This user does not exist'),
+                size_hint=(None, None), size=(400, 400))
+    pop.open()
+
+def deletedS():
+    pop = Popup(title='Success!', content=Label(text='This user has been deleted'),
+                size_hint=(None, None), size=(400, 400))
+    pop.open()
+
+def IsnowTeacher():
+    pop = Popup(title='Success!', content=Label(text='This user has promoted to teacher'),
+                size_hint=(None, None), size=(400, 400))
+    pop.open()
 # pop up massage for ivalid input
 
 class SchoolApp(App):
