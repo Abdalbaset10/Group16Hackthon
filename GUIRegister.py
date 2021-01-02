@@ -31,12 +31,37 @@ storage=firebase.storage()
 
 
 
-New_User_list = ["Username", "Password", "Full Name", "ID", "Date of Birth"]
-
-delete_User_list = [-1, -1, -1, -1, -1, -1]
 
 
-# this function to add new user to data base(csv file)
+def find_user(user):
+    users=db.child("users").get()
+    userfound=0
+    for i in users.each():
+        print(str(i.key()))
+        if str(user)==str(i.key()):
+            userfound=1
+    if userfound==1:
+        return 1
+    else:
+        return 0
+
+
+def grantAccess(username,password):
+    users=db.child("users").get()
+    grant_Access=0
+    for i in users.each():
+        if (str(username)==str(i.val()['Username']))and(str(password)==str(i.val()['pass'])):
+            grant_Access=1
+        if (str(username)==str(i.val()['Username']))and(str(password)!=str(i.val()['pass'])):
+            grant_Access=0
+    return grant_Access
+
+
+
+
+
+
+
 
 
 # this function check if user is already in data base
@@ -50,19 +75,18 @@ class RegiWindo(Screen):
     idn = ObjectProperty(None)
     fullname = ObjectProperty(None)
     dob = ObjectProperty(None)
-    email = ObjectProperty(None)
+    username = ObjectProperty(None)
     password = ObjectProperty(None)
 
     def regibtn(self):
-        if self.idn.text != '' and self.fullname.text != '' and self.dob.text != '' and self.email.text != '' and self.password.text != '':
-            try:
-                ##user=auth.create_user_with_email_and_password(self.email.text,self.password.text)
-                users_data={'Name':self.fullname.text,'IDnum':self.idn.text,'Email':self.email.text,'DOB':self.dob.text,'pass':self.password.text}
+        if self.idn.text != '' and self.fullname.text != '' and self.dob.text != '' and self.username.text != '' and self.password.text != '':
+            if find_user(str(self.idn.text))==0:
+                users_data={'Name':self.fullname.text,'IDnum':self.idn.text,'Username':self.username.text,'DOB':self.dob.text,'pass':self.password.text}
                 db.child("users").child(str(self.idn.text)).set(users_data)
                 if str(self.idn.text) == ("315198564"):
                     db.child("users").child("315198564").update({'Title':'Manager'})
                 print("account created successfully")
-            except:
+            else:
                 invalidForm()
 
         pass
@@ -71,13 +95,13 @@ class RegiWindo(Screen):
 # register screen take user input and check if its empty or in data base then store it
 
 class Loginwindo(Screen):
-    email = ObjectProperty(None)
+    username = ObjectProperty(None)
     password = ObjectProperty(None)
 
     def logbtn(self):
-        try:
-            login = auth.sign_in_with_email_and_password(self.email.text, self.password.text)
-            if str(self.email.text) == str("morad@test.com"):
+
+        if grantAccess(str(self.username.text),str(self.password.text))==1:
+            if str(self.username.text) == str("moradM"):
                 print("is Manager")
                 AccessGrant = 0
                 WM.current = "MangerLog"
@@ -85,7 +109,7 @@ class Loginwindo(Screen):
                 print("Normal User")
                 AccessGrant = 0
                 WM.current = "UserPage"
-        except:
+        if grantAccess(str(self.username.text),str(self.password.text))==0 :
             invalidinFormation()
 
             pass
