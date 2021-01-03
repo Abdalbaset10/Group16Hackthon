@@ -14,10 +14,7 @@ from kivy.uix.popup import Popup
 from kivy.properties import ObjectProperty
 from kivymd.uix.list import MDList,TwoLineListItem
 from kivymd.app import MDApp
-from kivymd.uix.screen import Screen
-
 import pyrebase
-
 
 
 firebaseConfig = {
@@ -68,6 +65,7 @@ def grantAccess(username,password):
 
 
 
+
 # this function check if user is already in data base
 class HomeWindo(Screen):
     pass
@@ -109,42 +107,22 @@ class Loginwindo(Screen):
             users = db.child("users").get()
             for i in users.each():
                 if (str(self.username.text) == str(i.val()['Username'])) and (str(self.password.text) == str(i.val()['pass'])) and (str('Teacher') == str(i.val()['Title'])):
-                    print("is Teacher")
                     logto=1
-                if (str(self.username.text) == str(i.val()['Username'])) and (str(self.password.text) == str(i.val()['pass'])) and (str('Manager') == str(i.val()['Title'])):
-                    print("is Manager")
-                    logto=2
+                if (str(self.username.text) == str(i.val()['Username'])) and (str(self.password.text) == str(i.val()['pass'])) and (str('Manager') == str(i.val()['Title'])):                    logto=2
             if logto==1:
-                print("is Teacher")
                 WM.current = "TeacherLog"
             if logto==2:
                 WM.current = "MangerLog"
             if logto==0:
                 WM.current = "UserPage"
 
-        if grantAccess(str(self.username.text),str(self.password.text))== 0:
+        if grantAccess(str(self.username.text),str(self.password.text))==0 :
             invalidinFormation()
 
             pass
 
 
 # login screen recive user input and verfy it
-class StudentsList(MDApp):
-    def build(self):
-        screen=Screen()
-        scroll=ScrollView()
-        list_view = MDList()
-        scroll.add_widget(list_view)
-        dataB=db.child("users").get()
-        for S in dataB.each():
-            if str('Student') == S.val()['Title']:
-                items= TwoLineListItem(text=str(S.val()['Name']),secondary_text= str(S.val()['IDnum']))
-                list_view.add_widget(items)
-        screen.add_widget(scroll)
-        return screen
-
-def runSlist():
-    StudentsList().run()
 
 
 class MangerLog(Screen):
@@ -210,7 +188,7 @@ class UserPage(Screen):
     pass
 
 
-kv = Builder.load_file("mainapp.kv")
+kv = Builder.load_file("register.kv")
 WM = WindowManger()
 screens = [HomeWindo(name="Home"), RegiWindo(name="Register"), Loginwindo(name="Login"), MangerLog(name="MangerLog"),TeacherLog(name="TeacherLog"),
            MangerDuser(name="MangerDuser"), UserPage(name="UserPage"),MangerMakeTeacher(name="MangerMakeTeacher"),PassReset(name="PassReset")]
@@ -257,5 +235,4 @@ class SchoolApp(App):
 
 
 if __name__ == '__main__':
-    ##SchoolApp().run()
-      runSlist()
+    SchoolApp().run()
