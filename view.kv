@@ -1,0 +1,76 @@
+
+
+
+
+
+
+
+<ViewWindo>
+    name:"Sndmsg"
+    msgtxt:msg
+    id:viewu
+    orientation: 'vertical'
+    canvas.before:
+        Color:
+            rgba: (1,1,1,1)
+        Rectangle:
+            size: self.size
+            pos: self.pos
+    Label:
+        text:"Report a bug"
+        size_hint_x: 1
+        size_hint_y: 1
+        bold: True
+        color: 0,0,0,1
+    TextInput:
+        id:msg
+        multiline:True
+        text:"Write the report here"
+
+    BoxLayout:
+        id:header
+        size_hint_y:None
+        size_hint_x: None
+        height: 40
+        canvas.before:
+            Color:
+                rgba: (1,1,1,1)
+            Rectangle:
+                size: self.size
+                pos: self.pos
+
+
+
+        Button:
+            id: send
+            text: 'Send'
+            color: 0,0,0,1
+            on_release:
+                root.printtxt()
+
+    BoxLayout:
+        id: reset
+        size_hint_y: None
+        size_hint_x: None
+        height: 50
+        spacing: 5
+        canvas.before:
+            Color:
+                rgba: (1,1,1,1)
+        Button:
+            text: 'reset'
+            color: 0,0,0,1
+            on_release:msg.text=''
+
+
+
+    BoxLayout:
+        id: scroll
+        size_hint_y: None
+        size_hint_x: None
+        height: 50
+        canvas.before:
+            Color:
+                rgba: (0,0,0,0)
+
+
