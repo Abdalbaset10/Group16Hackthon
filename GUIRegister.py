@@ -12,7 +12,10 @@ from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.uix.popup import Popup
 from kivy.properties import ObjectProperty
-from kivymd.uix.list import MDList,OneLineListItem
+from kivymd.uix.list import MDList,TwoLineListItem
+from kivymd.app import MDApp
+from kivymd.uix.screen import Screen
+
 import pyrebase
 
 
@@ -57,7 +60,6 @@ def grantAccess(username,password):
         if (str(username)==str(i.val()['Username']))and(str(password)!=str(i.val()['pass'])):
             grant_Access=0
     return grant_Access
-
 
 
 
@@ -120,13 +122,29 @@ class Loginwindo(Screen):
             if logto==0:
                 WM.current = "UserPage"
 
-        if grantAccess(str(self.username.text),str(self.password.text))==0 :
+        if grantAccess(str(self.username.text),str(self.password.text))== 0:
             invalidinFormation()
 
             pass
 
 
 # login screen recive user input and verfy it
+class StudentsList(MDApp):
+    def build(self):
+        screen=Screen()
+        scroll=ScrollView()
+        list_view = MDList()
+        scroll.add_widget(list_view)
+        dataB=db.child("users").get()
+        for S in dataB.each():
+            if str('Student') == S.val()['Title']:
+                items= TwoLineListItem(text=str(S.val()['Name']),secondary_text= str(S.val()['IDnum']))
+                list_view.add_widget(items)
+        screen.add_widget(scroll)
+        return screen
+
+def runSlist():
+    StudentsList().run()
 
 
 class MangerLog(Screen):
@@ -239,4 +257,5 @@ class SchoolApp(App):
 
 
 if __name__ == '__main__':
-    SchoolApp().run()
+    ##SchoolApp().run()
+      runSlist()
