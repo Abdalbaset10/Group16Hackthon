@@ -20,21 +20,35 @@ from kivy.uix.boxlayout import BoxLayout
 from firebase import firebase
 from kivymd.app import MDApp
 import json
-firebase=firebase.FirebaseApplication("https://myschoolproject-72b52-default-rtdb.firebaseio.com/", None)
+import firebase_admin
+from firebase_admin import  credentials
+from firebase_admin import db
+from datetime import datetime
+###firebase=firebase.FirebaseApplication("https://myschoolproject-72b52-default-rtdb.firebaseio.com/", None)
+
+cred = credentials.Certificate('myschoolproject.json')
+firebase_admin.initialize_app(cred,{
+    'databaseURL':'https://myschoolproject-72b52-default-rtdb.firebaseio.com/'
+})
 
 
 class WindowManger(ScreenManager):
     pass
 
+
 class ViewWindo(BoxLayout):
     msgtxt=ObjectProperty(None)
     emailtxt=ObjectProperty(None)
+    tnow = datetime.now()
     def __init__(self,**kwargs):
         super().__init__(**kwargs)
     def printtxt(self):
-        data= {'report':self.msgtxt.text,'Email':self.emailtxt.text}
-        sent=json.dumps(data)
-        result=firebase.post("/Bugreport",sent)
+        email=str(self.emailtxt.text)
+        data= {'report':self.msgtxt.text,'Email':self.emailtxt.text,'Date':self.tnow.strftime("%m/%d/%Y, %H:%M:%S")}
+        ref=db.reference('Report')
+        ref.child('report').child(email.split("@")[0]).set(data)
+
+
 
 
 kv = Builder.load_file("view.kv")
