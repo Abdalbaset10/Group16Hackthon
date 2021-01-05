@@ -8,6 +8,7 @@
 <ViewWindo>
     name:"Sndmsg"
     msgtxt:msg
+    emailtxt:email
     id:viewu
     orientation: 'vertical'
     canvas.before:
@@ -22,10 +23,22 @@
         size_hint_y: 1
         bold: True
         color: 0,0,0,1
+
+    BoxLayout:
+        Label:
+            text:"Email"
+            color:0,0,0,1
+        TextInput:
+            id:email
+            multiline:False
+            size_hint: (0.6, 0.2)
+            pos_hint: {'x': 0.7, 'top': 0.65}
     TextInput:
         id:msg
         multiline:True
         text:"Write the report here"
+
+
 
     BoxLayout:
         id:header
@@ -60,7 +73,8 @@
         Button:
             text: 'reset'
             color: 0,0,0,1
-            on_release:msg.text=''
+            on_release:msg.text='Write the report here'
+            on_release:email.text=''
 
 
 
