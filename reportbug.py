@@ -18,8 +18,8 @@ import pyrebase
 from kivy.core.window import Window
 from kivy.uix.boxlayout import BoxLayout
 from firebase import firebase
-
-
+from kivymd.app import MDApp
+import json
 firebase=firebase.FirebaseApplication("https://myschoolproject-72b52-default-rtdb.firebaseio.com/", None)
 
 
@@ -28,10 +28,13 @@ class WindowManger(ScreenManager):
 
 class ViewWindo(BoxLayout):
     msgtxt=ObjectProperty(None)
+    emailtxt=ObjectProperty(None)
     def __init__(self,**kwargs):
         super().__init__(**kwargs)
     def printtxt(self):
-        result= firebase.post('msg',self.msgtxt.text)
+        data= {'report':self.msgtxt.text,'Email':self.emailtxt.text}
+        sent=json.dumps(data)
+        result=firebase.post("/Bugreport",sent)
 
 
 kv = Builder.load_file("view.kv")
@@ -41,7 +44,7 @@ kv = Builder.load_file("view.kv")
 ##for screens in screens:
   ###  WM.add_widget(screens)
 
-class SchoolApp(App):
+class SchoolApp(MDApp):
     def build(self):
         return ViewWindo()
 
