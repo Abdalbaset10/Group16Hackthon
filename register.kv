@@ -1,0 +1,318 @@
+WindowManger:
+    HomeWindo:
+    RegiWindo:
+    Loginwindo:
+    MangerLog:
+    MangerDuser:
+    MangerMakeTeacher:
+    UserPage:
+    TeacherLog:
+    PassReset:
+
+<HomeWindo>
+    name:"Home"
+    GridLayout:
+        cols:1
+        Label:
+            text:"Welcome to School App"
+        Button:
+            text:"Register"
+            on_release:
+                app.root.current="Register"
+                root.manager.transition.direction="left"
+        Button:
+            text:"Login"
+            on_release:
+                app.root.current="Login"
+                root.manager.transition.direction="left"
+
+
+<RegiWindo>
+    name:"Register"
+    idn:idnum
+    fullname:F_name
+    dob:date
+    username:Username
+    password:Pass
+    GridLayout:
+        cols:1
+        Label:
+            text:"Register"
+
+        GridLayout:
+            cols:2
+            Label:
+                text:"ID number"
+            TextInput:
+                id:idnum
+                multiline:False
+            Label:
+                text:"Full Name"
+            TextInput:
+                id:F_name
+                multiline:False
+            Label:
+                text:"date of birth(dd/mm/yyyy)"
+            TextInput:
+                id:date
+                multiline:False
+            Label:
+                text:"Username"
+            TextInput:
+                id:Username
+                multiline:False
+            Label:
+                text:"Password"
+            TextInput:
+                id:Pass
+                password:True
+                multiline:False
+        GridLayout:
+            cols:2
+            Button:
+                text:"Back"
+                size_hint:0.5,0.5
+                on_release:
+                    app.root.current="Home"
+                    root.manager.transition.direction="right"
+            Button:
+                text:"Submit"
+                size_hint:0.5,0.5
+                on_release:
+                    root.regibtn()
+
+
+
+
+
+<Loginwindo>
+    name:"Login"
+    username:Username
+    password:PassE
+    GridLayout:
+        cols:1
+        Label:
+            text:"Login"
+        GridLayout:
+            cols:2
+            Label:
+                text:"Username"
+            TextInput:
+                id:Username
+                multiline:False
+            Label:
+                text:"Password"
+            TextInput:
+                id:PassE
+                password:True
+                multiline:False
+
+        GridLayout:
+            cols:2
+            Button:
+                text:"Back"
+                on_release:
+                    app.root.current="Home"
+                    root.manager.transition.direction="right"
+            Button:
+                text:"Forget password"
+                on_release:
+                    app.root.current="PassReset"
+                    root.manager.transition.direction="right"
+            Button:
+                text:"Login"
+                on_release:
+                    root.logbtn()
+
+
+<MangerLog>
+    name:"MangerLog"
+    GridLayout:
+        cols:1
+        Label:
+            text:"Manager Main Page"
+        GridLayout:
+            cols:2
+
+
+        GridLayout:
+            cols:2
+            Button:
+                text:"Log out"
+                on_release:
+                    app.root.current="Home"
+                    root.manager.transition.direction="right"
+            Button:
+                text:"Delete user"
+                on_release:
+                    app.root.current="MangerDuser"
+                    root.manager.transition.direction="left"
+
+
+        GridLayout:
+            cols:2
+            Button:
+                text:"Make Teacher"
+                on_release:
+                    app.root.current="MangerMakeTeacher"
+                    root.manager.transition.direction="left"
+
+
+            Button:
+                text:"nothing"
+                on_release:
+
+<MangerDuser>
+    name:"MangerDuser"
+    identity:IDnum
+    GridLayout:
+        cols:1
+        Label:
+            text:"Delete Existing User"
+        GridLayout:
+            cols:2
+            Label:
+                text:"Enter User ID number"
+            TextInput:
+                id:IDnum
+                multiline:False
+
+        GridLayout:
+            cols:2
+            Button:
+                text:"Back"
+                on_release:
+                    app.root.current="MangerLog"
+                    root.manager.transition.direction="right"
+            Button:
+                text:"delete"
+                on_release:
+                    root.deletebtn()
+
+<MangerMakeTeacher>
+    name:"MangerMakeTeacher"
+    identity:IDnum
+    subject:Sub
+    GridLayout:
+        cols:1
+        Label:
+            text:"Make teacher"
+        GridLayout:
+            cols:2
+            Label:
+                text:"Enter User ID number"
+            TextInput:
+                id:IDnum
+                multiline:False
+        GridLayout:
+            cols:2
+            Label:
+                text:"Enter Subject"
+            TextInput:
+                id:Sub
+                multiline:False
+
+        GridLayout:
+            cols:2
+            Button:
+                text:"Back"
+                on_release:
+                    app.root.current="MangerLog"
+                    root.manager.transition.direction="right"
+            Button:
+                text:"Make teacher"
+                on_release:
+                    root.MkTeacher()
+
+
+<PassReset>
+    name:"Password reset"
+    identity:IDnum
+    newp:newpass
+    dob:Dob
+    GridLayout:
+        cols:1
+        Label:
+            text:"Pass reset"
+        GridLayout:
+            cols:2
+            Label:
+                text:"Enter User ID number"
+            TextInput:
+                id:IDnum
+                multiline:False
+        GridLayout:
+            cols:2
+            Label:
+                text:"Enter Date of birth dd/mm/yyyy"
+            TextInput:
+                id:Dob
+                multiline:False
+        GridLayout:
+            cols:2
+            Label:
+                text:"Enter NewPassword"
+            TextInput:
+                id:newpass
+                multiline:False
+
+        GridLayout:
+            cols:2
+            Button:
+                text:"Back"
+                on_release:
+                    app.root.current="Home"
+                    root.manager.transition.direction="right"
+            Button:
+                text:"Confirm Reset"
+                on_release:
+                    root.resetPass()
+
+
+<TeacherLog>
+    name:"TeacherLog"
+    GridLayout:
+        cols:1
+        Label:
+            text:"Teacher Main Page"
+        GridLayout:
+            cols:2
+
+
+        GridLayout:
+            cols:2
+            Button:
+                text:"Log out"
+                on_release:
+                    app.root.current="Home"
+                    root.manager.transition.direction="right"
+            Button:
+                text:"Set grades"
+                on_release:
+        GridLayout:
+            cols:2
+            Button:
+                text:"NOthing"
+                on_release:
+            Button:
+                text:"nothing"
+                on_release:
+
+<UserPage>
+    name:"UserPage"
+    GridLayout:
+        cols:1
+        Label:
+            text:"Welcome User"
+        GridLayout:
+            cols:2
+            Button:
+                text:"Back"
+                on_release:
+                    app.root.current="Login"
+                    root.manager.transition.direction="right"
+            Button:
+                text:"Log OUT"
+                on_release:
+                    app.root.current="Home"
+                    root.manager.transition.direction="left"
