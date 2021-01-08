@@ -91,10 +91,13 @@ def IsnowTeacher():
                 size_hint=(None, None), size=(400, 400))
     pop.open()
 
+
 def namechanged():
     pop = Popup(title='Success!', content=Label(text='Name changed successfully reloggin to see the change'),
                 size_hint=(None, None), size=(400, 400))
     pop.open()
+
+
 def dobchanged():
     pop = Popup(title='Success!', content=Label(text='Date of birth changed successfully reloggin to see the change'),
                 size_hint=(None, None), size=(400, 400))
@@ -109,9 +112,11 @@ class MangerLog(Screen):
     def home_button(self):
         self.manager.current = 'mangerlog'
         print(self.manager.screens[7].ids)
+
     def my_profile(self):
         self.manager.screens[7].build()
-        self.manager.current='myprofile'
+        self.manager.current = 'myprofile'
+
     pass
 
 
@@ -125,6 +130,7 @@ class MyProfile(Screen):
         self.manager.screens[7].ids.idnum.text = 'ID Number:' + ' ' + user.val()['IDnum']
         self.manager.screens[7].ids.dob.text = 'Date of Birth:' + ' ' + user.val()['DOB']
         self.manager.screens[7].ids.subt.text = 'Title:' + ' ' + user.val()['Title']
+
     def home_button(self):
         user_key = currentUser(str(self.manager.screens[2].ids.username.text))
         user = db.child("users").child(user_key).get()
@@ -141,7 +147,7 @@ class MyProfile(Screen):
             self.manager.current = 'mangerlog'
 
     def change_dob_D(self):
-        dialog=MDDialog(title='Change date of birth',text='test',size_hint=(0.5,0.5))
+        dialog = MDDialog(title='Change date of birth', text='test', size_hint=(0.5, 0.5))
         ##dialog.open()
 
     pass
@@ -150,26 +156,30 @@ class MyProfile(Screen):
 class TeacherLog(Screen):
     def home_button(self):
         self.manager.current = 'teacherlog'
+
     def my_profile(self):
         self.manager.screens[7].build()
-        self.manager.current='myprofile'
+        self.manager.current = 'myprofile'
 
     pass
+
 
 class StudentPage(Screen):
 
     def home_button(self):
         self.manager.screens[13].ids.grades.clear_widgets()
         self.manager.current = 'Spage'
+
     def my_grades(self):
         self.manager.screens[13].build()
         self.manager.current = 'grades'
+
     def my_profile(self):
         self.manager.screens[12].build()
-        self.manager.current='Sprofile'
-
+        self.manager.current = 'Sprofile'
 
         pass
+
 
 class Sprofile(Screen):
     def build(self):
@@ -181,26 +191,29 @@ class Sprofile(Screen):
         self.manager.screens[12].ids.dob.text = 'Date of Birth:' + ' ' + user.val()['DOB']
         self.manager.screens[12].ids.subt.text = 'Title:' + ' ' + user.val()['Title']
 
-
     def home_button(self):
         self.manager.screens[13].ids.grades.clear_widgets()
         self.manager.current = 'Spage'
 
     pass
+
 
 class GradesPage(Screen):
     def build(self):
         user_key = currentUser(str(self.manager.screens[2].ids.username.text))
-        grades=db.child("users").child(user_key).child("Grades").get()
+        grades = db.child("users").child(user_key).child("Grades").get()
         user = db.child("users").child(user_key).get()
-        self.manager.screens[13].ids.stdentgradebar.title='Grades Of ' + str(user.val()['Name'])
+        self.manager.screens[13].ids.stdentgradebar.title = 'Grades Of ' + str(user.val()['Name'])
         for sub in grades.each():
-            items=OneLineListItem(text=str(sub.key())+': ' + str(sub.val()))
+            items = OneLineListItem(text=str(sub.key()) + ': ' + str(sub.val()))
             self.manager.screens[13].ids.grades.add_widget(items)
+
     def home_button(self):
         self.manager.screens[13].ids.grades.clear_widgets()
         self.manager.current = 'Spage'
+
     pass
+
 
 class MangerDuser(Screen):
     idnum = ObjectProperty(None)
@@ -215,12 +228,14 @@ class MangerDuser(Screen):
 
     pass
 
+
 class Change_Name(Screen):
 
     def change_name(self):
         user_key = currentUser(str(self.ids.username.text))
-        db.child("users").child(user_key).update({'Name':str(self.ids.newname.text)})
+        db.child("users").child(user_key).update({'Name': str(self.ids.newname.text)})
         namechanged()
+
     def back_button(self):
         user_key = currentUser(str(self.ids.username.text))
         user = db.child("users").child(user_key).get()
@@ -237,12 +252,15 @@ class Change_Name(Screen):
             self.manager.current = 'mangerlog'
 
     pass
+
+
 class Change_DOB(Screen):
 
     def change_DOB(self):
         user_key = currentUser(str(self.ids.username.text))
-        db.child("users").child(user_key).update({'DOB':str(self.ids.newdob.text)})
+        db.child("users").child(user_key).update({'DOB': str(self.ids.newdob.text)})
         dobchanged()
+
     def back_button(self):
         user_key = currentUser(str(self.ids.username.text))
         user = db.child("users").child(user_key).get()
@@ -257,8 +275,8 @@ class Change_DOB(Screen):
         if logto == 2:
             self.manager.current = 'mangerlog'
 
-
     pass
+
 
 class MangerMakeTeacher(Screen):
     identity = ObjectProperty(None)
@@ -303,18 +321,23 @@ class RegiWindo(Screen):
 
     pass
 
+
 class PassReset(Screen):
     def resetPass(self):
-        if find_user(str(self.ids.IDnum.text))==0:
+        if find_user(str(self.ids.IDnum.text)) == 0:
             no_user()
         else:
             users = db.child("users").get()
             for i in users.each():
-                if (str(self.ids.IDnum.text) == str(i.val()['IDnum'])) and (str(self.ids.dob.text) == str(i.val()['DOB'])):
+                if (str(self.ids.IDnum.text) == str(i.val()['IDnum'])) and (
+                        str(self.ids.dob.text) == str(i.val()['DOB'])):
                     db.child("users").child(str(self.ids.IDnum.text)).update({'pass': str(self.ids.newpass.text)})
                     changedsucc()
                     self.manager.current = 'menu'
+
     pass
+
+
 class Loginwindo(Screen):
     username_box = ObjectProperty(None)
     password_box = ObjectProperty(None)
@@ -332,9 +355,6 @@ class Loginwindo(Screen):
 
             self.manager.screens[4].ids.teachername.title = 'Welcome' + ' ' + user.val()['Name']
 
-
-
-
             print(self.manager.screens[2].ids)
             ###Page 9 change name ###
             self.manager.screens[9].ids.username.text = user.val()['Username']
@@ -346,7 +366,6 @@ class Loginwindo(Screen):
             self.manager.screens[11].ids.username.text = user.val()['Username']
 
             db.child("Online").child(self.username_box.text).set("ok")
-
 
             if str('Teacher') == str(user.val()['Title']):
                 logto = 1
