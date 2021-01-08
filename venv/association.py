@@ -14,6 +14,7 @@ ScreenManager:
     Change_DOB:
     StudentPage:
     Sprofile:
+    reportprob:
        
 <MenuScreen>:
     name:'menu'
@@ -768,5 +769,46 @@ ScreenManager:
                             on_press:
                                 root.manager.current='menu'
                             IconLeftWidget:
-                                icon:'logout'                                              
+                                icon:'logout'     
+                                
+<reportprob>
+    name:'report'
+    emailtxt:remail
+    msgtxt:retext
+    MDRectangleFlatButton:
+        text:'<'
+        pos_hint:{'center_x':0.05,'center_y':0.95}
+        size_hint:0.05,0.05
+        on_press:
+            root.manager.current='menu'
+    MDTextField:
+        hint_text:"Enter your Email"
+        pos_hint:{'center_x':0.4,'center_y':0.8}
+        size_hint_x:None
+        width:300
+        id:remail
+        multiline:False
+    MDTextField:
+        hint_text:"Enter your problem here"
+        pos_hint:{'center_x':0.4,'center_y':0.5}
+        size_hint_x:None
+        width:500
+        id:retext
+        multiline:True
+    
+    MDRectangleFlatButton:
+        text:'Send'
+        pos_hint:{'center_x':0.8,'center_y':0.2}
+        size_hint:0.5,0.2
+        on_press:
+            root.printtxt()
+
+    MDRectangleFlatButton:
+        text:'Rest'
+        pos_hint:{'center_x':0.2,'center_y':0.2}
+        size_hint:0.5,0.2
+        on_press:
+            remail.text=""
+            retext.text=""
+                                
 """
