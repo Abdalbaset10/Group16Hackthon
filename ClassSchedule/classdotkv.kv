@@ -1,0 +1,46 @@
+ScreenManager:
+   ClassWind:
+
+<ClassWind>
+   name:"fscreen"
+   teachid:idt
+   classid:classid
+   MDToolbar:
+      title:'Class Schedule'
+      elevation: 10
+      pos_hint: {'top': 1}
+
+   MDDropDownItem:
+      id: drop_item
+      pos_hint: {'center_x': .5, 'center_y': .8}
+      text: 'Pick a Day'
+      on_release: app.menu.open()
+   MDDropDownItem:
+      id: drop_item_Time
+      pos_hint: {'center_x': .5, 'center_y': .6}
+      text: 'Pick a Time'
+      on_release: app.menutime.open()
+
+
+   MDTextField:
+      hint_text:"Enter Teacher ID"
+      pos_hint:{'center_x':0.5,'center_y':0.4}
+      size_hint_x:None
+      width:300
+      id:idt
+      multiline:False
+
+   MDTextField:
+      hint_text:"Class ID"
+      pos_hint:{'center_x':0.5,'center_y':0.2}
+      size_hint_x:None
+      width:300
+      id:classid
+      multiline:False
+
+   MDRectangleFlatButton:
+      text:'Submit'
+      pos_hint:{'center_x':0.5,'center_y':0.1}
+      width:300
+      on_release:
+         root.data_submit()
