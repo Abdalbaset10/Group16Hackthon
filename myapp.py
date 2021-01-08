@@ -330,6 +330,17 @@ class Loginwindo(Screen):
 
     pass
 
+class reportprob(Screen):
+    msgtxt = ObjectProperty(None)
+    emailtxt = ObjectProperty(None)
+    tnow = datetime.now()
+
+    def printtxt(self):
+        email = str(self.emailtxt.text)
+        data = {'report': self.msgtxt.text, 'Email': self.emailtxt.text,
+                'Date': self.tnow.strftime("%m/%d/%Y, %H:%M:%S")}
+        db.child('Report').child(email.split("@")[0]).set(data)
+    pass
 
 class school(MDApp):
     def build(self):
