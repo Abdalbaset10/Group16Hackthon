@@ -15,6 +15,7 @@ ScreenManager:
     StudentPage:
     Sprofile:
     GradesPage:
+    ChangeSgrade:
  
        
 <MenuScreen>:
@@ -274,15 +275,21 @@ ScreenManager:
         text:'Presence Check'
         pos_hint:{'center_x':0.9,'top':0.8}
         size_hint:0.2,0.2
+    MDRectangleFlatButton:
+        text:'change grade'
+        pos_hint:{'center_x':0.9,'top':0.6}
+        size_hint:0.2,0.2
+        on_release:
+            root.S_grades()
 
     MDRectangleFlatButton:
         text:'Remove student'
-        pos_hint:{'center_x':0.9,'top':0.6}
+        pos_hint:{'center_x':0.9,'top':0.4}
         size_hint:0.2,0.2
 
     MDRectangleFlatButton:
         text:'Add Assignment'
-        pos_hint:{'center_x':0.9,'top':0.4}
+        pos_hint:{'center_x':0.9,'top':0.2}
         size_hint:0.2,0.2
      
 
@@ -846,5 +853,92 @@ ScreenManager:
                                 root.manager.current='menu'
                             IconLeftWidget:
                                 icon:'logout'
-                                
+<ChangeSgrade>
+    name:'chgrades'
+    NavigationLayout:
+        ScreenManager:
+            Screen:
+                BoxLayout:
+                    orientation:'vertical'
+                    MDToolbar:
+                        title:'Change Student Grade'
+                        left_action_items:[["menu",lambda x: nav_drawer.toggle_nav_drawer()]]
+                        elevation:8
+                    BoxLayout:
+                        ScrollView:
+                            MDList:
+                                id:grades
+                    BoxLayout:
+                        MDTextField:
+                            hint_text:"Enter the student ID"
+                            pos_hint:{'center_x':0.4,'center_y':0.5}
+                            size_hint_x:None
+                            width:300
+                            id:studentid
+                            multiline:False
+                        MDTextField:
+                            hint_text:"Enter the the student new grade"
+                            pos_hint:{'center_x':0.4,'center_y':0.5}
+                            size_hint_x:None
+                            width:300
+                            id:newgrade
+                            multiline:False
+                        MDRectangleFlatButton:
+                            text:'Confirm'
+                            pos_hint:{'center_x':0.2,'center_y':0.2} 
+                            size_hint:0.3,0.3
+                            on_release:
+                                root.change_grade()
+                        MDRectangleFlatButton:
+                            text:'Back'
+                            pos_hint:{'center_x':0.6,'center_y':0.2} 
+                            size_hint:0.3,0.3
+                            on_release:
+                                root.home_button()
+                    Widget:
+                          
+        MDNavigationDrawer:
+            id: nav_drawer
+            
+            BoxLayout:
+                orientation:'vertical'
+                
+                spacing: '8dp'
+                padding: '8dp'
+                Image:
+                    source:'sce.jpg'
+                    
+
+                MDLabel:
+                    id:username
+                    text:
+                    font_style:'Caption'
+                    size_hint_y: None
+                    height: self.texture_size[1]
+                
+                ScrollView:
+                    MDList:
+
+                        OneLineIconListItem:
+                            text:'My Grades'
+                            on_release:
+                                root.my_grades() 
+                            IconLeftWidget:
+                                icon:'clipboard-list'
+                        OneLineIconListItem:
+                            text:'My Messages'
+                            IconLeftWidget:
+                                icon:'message'
+                        OneLineIconListItem:
+                            text:'Home Page'
+                            on_press:
+                                root.home_button()
+                            IconLeftWidget:
+                                icon:'home'                                 
+                        OneLineIconListItem:
+                            text:'Log Out'
+                            on_press:
+                                root.manager.current='menu'
+                            IconLeftWidget:
+                                icon:'logout'             
 """

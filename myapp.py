@@ -99,7 +99,10 @@ def dobchanged():
     pop = Popup(title='Success!', content=Label(text='Date of birth changed successfully reloggin to see the change'),
                 size_hint=(None, None), size=(400, 400))
     pop.open()
-
+def gradechanged():
+    pop = Popup(title='Success!', content=Label(text='grade has been changed'),
+                size_hint=(None, None), size=(400, 400))
+    pop.open()
 
 class MenuScreen(Screen):
     pass
@@ -153,6 +156,9 @@ class TeacherLog(Screen):
     def my_profile(self):
         self.manager.screens[7].build()
         self.manager.current='myprofile'
+    def S_grades(self):
+        self.manager.screens[14].build()
+        self.manager.current = 'chgrades'
 
     pass
 
@@ -201,6 +207,36 @@ class GradesPage(Screen):
         self.manager.screens[13].ids.grades.clear_widgets()
         self.manager.current = 'Spage'
     pass
+
+class ChangeSgrade(Screen):
+    def build(self):
+
+        user_key = currentUser(str(self.manager.screens[2].ids.username.text))
+        teacherid=db.child("users").child(user_key).get()
+
+        teachersubject=teacherid.val()['Subject']
+        user = db.child("users").get()
+        for sub in user.each():
+            if str(sub.val()['Title']) == str('Student'):
+                student = db.child("users").child(sub.key()).child("Grades").get()
+                items = OneLineListItem(text='Student ID: '+str(sub.key())+'  Student Name: '+str(sub.val()['Name'])+'   Subject: '+str(teachersubject) + ':   ' + str(student.val()[teachersubject]))
+                self.manager.screens[14].ids.grades.add_widget(items)
+
+    def home_button(self):
+        self.manager.screens[14].ids.grades.clear_widgets()
+        self.manager.current = 'teacherlog'
+    def change_grade(self):
+        user_key = currentUser(str(self.manager.screens[2].ids.username.text))
+        teacherid=db.child("users").child(user_key).get()
+
+        teachersubject=teacherid.val()['Subject']
+
+        if find_user(self.ids.studentid.text) == 0 :
+            no_user()
+        else:
+            db.child("users").child(self.ids.studentid.text).child("Grades").update({teachersubject:self.ids.newgrade.text})
+            gradechanged()
+
 
 class MangerDuser(Screen):
     idnum = ObjectProperty(None)
@@ -335,7 +371,7 @@ class Loginwindo(Screen):
 
 
 
-            print(self.manager.screens[2].ids)
+            print(self.manager.screens[14].ids)
             ###Page 9 change name ###
             self.manager.screens[9].ids.username.text = user.val()['Username']
 
