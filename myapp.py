@@ -274,7 +274,7 @@ class MangerMakeTeacher(Screen):
 
     pass
 
-
+##aa
 class RegiWindo(Screen):
     id_box = ObjectProperty(None)
     fullname_box = ObjectProperty(None)
