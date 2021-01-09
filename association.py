@@ -280,6 +280,12 @@ ScreenManager:
                                 root.manager.current='menu'
                             IconLeftWidget:
                                 icon:'logout'
+                        OneLineIconListItem:
+                            text:'TestPage'
+                            on_press:
+                                root.manger_log()
+                            IconLeftWidget:
+                                icon:'account-box'                                
                                
 <TeacherLog>
     name:'teacherlog'
