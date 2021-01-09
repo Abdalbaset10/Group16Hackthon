@@ -82,12 +82,6 @@ ScreenManager:
                                 root.manager.current='Register'
                             IconLeftWidget:
                                 icon:'face-woman'
-                        OneLineIconListItem:
-                            text:'TestPage'
-                            on_press:
-                                root.manager.current='manclass'
-                            IconLeftWidget:
-                                icon:'account-box'
 
         
                    
@@ -219,7 +213,9 @@ ScreenManager:
     MDRectangleFlatButton:
         text:'Change schedual'
         pos_hint:{'center_x':0.9,'top':0.4}
-        size_hint:0.2,0.2        
+        size_hint:0.2,0.2
+        on_release:
+            root.manger_log()        
 
     MDRectangleFlatButton:
         text:'Make announcement'
@@ -280,12 +276,7 @@ ScreenManager:
                                 root.manager.current='menu'
                             IconLeftWidget:
                                 icon:'logout'
-                        OneLineIconListItem:
-                            text:'TestPage'
-                            on_press:
-                                root.manger_log()
-                            IconLeftWidget:
-                                icon:'account-box'                                
+                             
                                
 <TeacherLog>
     name:'teacherlog'
@@ -989,14 +980,14 @@ ScreenManager:
     
     MDRectangleFlatButton:
         text:'Send'
-        pos_hint:{'center_x':0.8,'center_y':0.2}
-        size_hint:0.5,0.2
+        pos_hint:{'center_x':0.6,'center_y':0.2}
+        size_hint:0.3,0.3
         on_press:
             root.printtxt()
     MDRectangleFlatButton:
-        text:'Rest'
+        text:'Reset'
         pos_hint:{'center_x':0.2,'center_y':0.2}
-        size_hint:0.5,0.2
+        size_hint:0.3,0.3
         on_press:
             remail.text=""
             retext.text=""    
@@ -1004,44 +995,56 @@ ScreenManager:
             
 <ManagClass>
     name:'manclass'
-    MDToolbar:
-        title:'Class Schedule'
-        elevation: 10
-        pos_hint: {'top': 1}
-        
-    MDDropDownItem:
-        id: drop_item
-        pos_hint: {'center_x': .5, 'center_y': .8}
-        text: 'Pick a Day'
-        on_release: app.menu.open()
-    MDDropDownItem:
-        id: drop_item_Time
-        pos_hint: {'center_x': .5, 'center_y': .6}
-        text: 'Pick a Time'
-        on_release: app.menutime.open()
-    
-    
+    id:menuday
+    id:menutime
     MDTextField:
-        hint_text:"Enter Teacher ID"
-        pos_hint:{'center_x':0.5,'center_y':0.4}
-        size_hint_x:None
-        width:300
-        id:idt
-        multiline:False
-        
+        id:timepicked
+
     MDTextField:
-        hint_text:"Class ID"
-        pos_hint:{'center_x':0.5,'center_y':0.2}
-        size_hint_x:None
-        width:300
-        id:classid
-        multiline:False
-        
-    MDRectangleFlatButton:
-        text:'Submit'
-        pos_hint:{'center_x':0.5,'center_y':0.1} 
-        width:300
-        on_release:
-            root.data_submit()
-           
+        id:daypicked
+    BoxLayout:
+        MDToolbar:
+            title:'Class Schedule'
+            elevation: 10
+            pos_hint: {'bottom': 1} 
+    BoxLayout:    
+        BoxLayout:
+            orientation:'horizontal'
+            BoxLayout:
+                orientation:'horizontal'
+                BoxLayout:
+                    ScrollView:
+                        MDList:
+                            id:menuday
+                BoxLayout:
+                    ScrollView:
+                        MDList:
+                            id:menutime
+    
+        BoxLayout:
+            orientation:'horizontal'
+            BoxLayout:           
+                MDTextField:
+                    hint_text:"Enter Teacher ID"
+                    pos_hint:{'center_x':0.5,'center_y':0.4}
+                    size_hint_x:None
+                    width:300
+                    id:idt
+                    multiline:False
+            BoxLayout:        
+                MDTextField:
+                    hint_text:"Class ID"
+                    pos_hint:{'center_x':0,'center_y':0.3}
+                    size_hint_x:None
+                    width:300
+                    id:classid
+                    multiline:False
+            BoxLayout:        
+                MDRectangleFlatButton:
+                    text:'Submit'
+                    pos_hint:{'center_x':0.5,'center_y':0.2} 
+                    width:300
+                    on_release:
+                        root.data_submit()
+               
 """

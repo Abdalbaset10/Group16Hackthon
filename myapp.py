@@ -5,13 +5,14 @@ from kivy.uix.label import Label
 from association import screen_nav
 from kivy.uix.popup import Popup
 from kivy.properties import ObjectProperty
-from kivy.properties import StringProperty
+from kivy.properties import ListProperty
 from kivy.uix.screenmanager import Screen, ScreenManager
 from kivymd.uix.dialog import MDDialog
 from kivymd.uix.list import OneLineListItem
 import pyrebase
 from datetime import datetime
 from kivymd.uix.menu import MDDropdownMenu
+from kivymd.uix.menu import MDMenuItem
 from typing import List
 firebaseConfig = {
     'apiKey': "AIzaSyAxS1KDjH4OQrbw-k050yGJHQ8giCuyFDU",
@@ -225,8 +226,10 @@ class ChangeSgrade(Screen):
             if str(sub.val()['Title']) == str('Student'):
                 student = db.child("users").child(sub.key()).child("Grades").get()
                 items = OneLineListItem(text='Student ID: '+str(sub.key())+'  Student Name: '+str(sub.val()['Name'])+'   Subject: '+str(teachersubject) + ':   ' + str(student.val()[teachersubject]))
+                items.bind(on_release=self.manager.screens[14].test)
                 self.manager.screens[14].ids.grades.add_widget(items)
-
+    def test(self,text):
+        print(text.text)
     def home_button(self):
         self.manager.screens[14].ids.grades.clear_widgets()
         self.manager.current = 'teacherlog'
@@ -421,16 +424,28 @@ class reportprob(Screen):
     pass
 
 class ManagClass(Screen):
+    menu=ObjectProperty(None)
     def build(self):
-        daylist = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday"]
+        print("we arrived")
+        daylist = ["sunday", "monday", "tuesday", "wednesday", "thursday"]
         timelist = ["8:00", "8:45", "9:30", "10:15", "11:30", "12:45", "13:30"]
-        menu_items = [{"icon": "git", "text": daylist[i]} for i in range(5)]
-        self.ids.drop_item= MDDropdownMenu(
-            caller=self.ids.drop_item,
-            items=menu_items,
-            position="auto",
-            width_mult=4,
-        )
+        for i in daylist:
+            items = OneLineListItem(text=str(i))
+            items.bind(on_release=self.manager.screens[16].set_itemday)
+            self.manager.screens[16].ids.menuday.add_widget(items)
+
+        for i in timelist:
+            items = OneLineListItem(text=str(i))
+            items.bind(on_release=self.manager.screens[16].set_itemtime)
+            self.manager.screens[16].ids.menutime.add_widget(items)
+
+    def set_itemtime(self, text_of_the_option):
+        self.manager.screens[16].ids.timepicked.text=text_of_the_option.text
+    def set_itemday(self,text_of_the_option):
+        self.manager.screens[16].ids.daypicked.text = text_of_the_option.text
+    def data_submit(self):
+        teachersub=db.child("users").child(self.manager.screens[16].ids.idt.text).get()
+        print(teachersub.val()['Subject'])
 
 
 
