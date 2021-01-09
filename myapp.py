@@ -10,7 +10,8 @@ from kivy.uix.screenmanager import Screen, ScreenManager
 from kivymd.uix.dialog import MDDialog
 from kivymd.uix.list import OneLineListItem
 import pyrebase
-
+from datetime import datetime
+from kivymd.uix.menu import MDDropdownMenu
 firebaseConfig = {
     'apiKey': "AIzaSyAxS1KDjH4OQrbw-k050yGJHQ8giCuyFDU",
     'authDomain': "project16-f346d.firebaseapp.com",
@@ -371,7 +372,7 @@ class Loginwindo(Screen):
 
 
 
-            print(self.manager.screens[14].ids)
+            print(self.manager.screens[16].ids)
             ###Page 9 change name ###
             self.manager.screens[9].ids.username.text = user.val()['Username']
 
@@ -401,6 +402,53 @@ class Loginwindo(Screen):
             invalidinFormation()
 
     pass
+
+
+class reportprob(Screen):
+    msgtxt = ObjectProperty(None)
+    emailtxt = ObjectProperty(None)
+    tnow = datetime.now()
+
+    def printtxt(self):
+        email = str(self.emailtxt.text)
+        data = {'report': self.msgtxt.text, 'Email': self.emailtxt.text,
+                'Date': self.tnow.strftime("%m/%d/%Y, %H:%M:%S")}
+        db.child('Report').child(email.split("@")[0]).set(data)
+    pass
+
+class ManagClass(Screen):
+    daylist = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday"]
+    timelist = ["8:00", "8:45", "9:30", "10:15", "11:30", "12:45", "13:30"]
+    menu_items = [{"icon": "git", "text": daylist[i]} for i in range(5)]
+
+    Screen.menu = MDDropdownMenu(
+        caller=Screen.screen.ids.drop_item,
+        items=menu_items,
+        position="auto",
+        width_mult=4,
+    )
+    Screen.menu.bind(on_release=Screen.set_itemday)
+
+    menu_time = [{"icon": "git", "text": timelist[i]} for i in range(7)]
+    Screen.menutime = MDDropdownMenu(
+        caller=Screen.screen.ids.drop_item_Time,
+        items=menu_time,
+        position="auto",
+        width_mult=4,
+    )
+    Screen.menutime.bind(on_release=Screen.set_itemtime)
+
+    def set_itemtime(self, instance_menu, instance_menu_item):
+        self.screen.ids.drop_item.set_item(instance_menu_item.text)
+        self.menutime.dismiss()
+        print(instance_menu_item.text)
+
+    def set_itemday(self, instance_menu, instance_menu_item):
+        self.screen.ids.drop_item.set_item(instance_menu_item.text)
+        self.menu.dismiss()
+        day = str(instance_menu_item.text)
+        print(day)
+
 
 
 class school(MDApp):
