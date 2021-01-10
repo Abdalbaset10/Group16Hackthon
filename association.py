@@ -21,6 +21,8 @@ ScreenManager:
     annonman:
     pageann:
     viewsch:
+    clsspress:
+    clsch:
 
 
 <MenuScreen>:
@@ -89,7 +91,7 @@ ScreenManager:
                         OneLineIconListItem:
                             text:'viewPage'
                             on_press:
-                                root.manager.current='views'
+                                root.manager.current='clsh'
                             IconLeftWidget:
                                 icon:'account-box'
 
@@ -228,7 +230,9 @@ ScreenManager:
     MDRectangleFlatButton:
         text:'Change schedual'
         pos_hint:{'center_x':0.9,'top':0.4}
-        size_hint:0.2,0.2        
+        size_hint:0.2,0.2
+        on_press:
+            root.manger_log()        
 
     MDRectangleFlatButton:
         text:'Make announcement'
@@ -297,12 +301,7 @@ ScreenManager:
                                 root.manager.current='menu'
                             IconLeftWidget:
                                 icon:'logout'
-                        OneLineIconListItem:
-                            text:'TestPage'
-                            on_press:
-                                root.manger_log()
-                            IconLeftWidget:
-                                icon:'account-box'                                
+                              
 
 <TeacherLog>
     name:'teacherlog'
@@ -377,14 +376,20 @@ ScreenManager:
                             text:'Home Page'
                             on_press:
                                 root.home_button()
+                            IconLeftWidget:
+                                icon:'home'    
                         OneLineIconListItem:
                             text:'Announcement'
                             on_press:
                                 root.my_anno()
                             IconLeftWidget:
                                 icon:'android-messages'    
+                        OneLineIconListItem:
+                                text:'Class present'
+                            on_press:
+                                root.studpress()
                             IconLeftWidget:
-                                icon:'home'                                 
+                                icon:'android-messages'                      
                         OneLineIconListItem:
                             text:'Log Out'
                             on_press:
@@ -1033,46 +1038,63 @@ ScreenManager:
 
 <ManagClass>
     name:'manclass'
-    MDToolbar:
-        title:'Class Schedule'
-        elevation: 10
-        pos_hint: {'top': 1}
-
-    MDDropDownItem:
-        id: drop_item
-        pos_hint: {'center_x': .5, 'center_y': .8}
-        text: 'Pick a Day'
-        on_release: app.menu.open()
-    MDDropDownItem:
-        id: drop_item_Time
-        pos_hint: {'center_x': .5, 'center_y': .6}
-        text: 'Pick a Time'
-        on_release: app.menutime.open()
-
-
+    id:menuday
+    id:menutime
     MDTextField:
-        hint_text:"Enter Teacher ID"
-        pos_hint:{'center_x':0.5,'center_y':0.4}
-        size_hint_x:None
-        width:300
-        id:idt
-        multiline:False
-
+        id:timepicked
     MDTextField:
-        hint_text:"Class ID"
-        pos_hint:{'center_x':0.5,'center_y':0.2}
-        size_hint_x:None
-        width:300
-        id:classid
-        multiline:False
-
-    MDRectangleFlatButton:
-        text:'Submit'
-        pos_hint:{'center_x':0.5,'center_y':0.1} 
-        width:300
-        on_release:
-            root.data_submit()
-
+        id:daypicked
+    BoxLayout:
+        MDToolbar:
+            title:'Class Schedule'
+            elevation: 10
+            pos_hint: {'bottom': 1} 
+    BoxLayout:    
+        BoxLayout:
+            orientation:'horizontal'
+            BoxLayout:
+                orientation:'horizontal'
+                BoxLayout:
+                    ScrollView:
+                        MDList:
+                            id:menuday
+                BoxLayout:
+                    ScrollView:
+                        MDList:
+                            id:menutime
+    
+        BoxLayout:
+            orientation:'horizontal'
+            BoxLayout:           
+                MDTextField:
+                    hint_text:"Enter Teacher ID"
+                    pos_hint:{'center_x':0.5,'center_y':0.4}
+                    size_hint_x:None
+                    width:300
+                    id:idt
+                    multiline:False
+            BoxLayout:        
+                MDTextField:
+                    hint_text:"Class ID"
+                    pos_hint:{'center_x':0,'center_y':0.3}
+                    size_hint_x:None
+                    width:300
+                    id:classid
+                    multiline:False
+            BoxLayout:        
+                MDRectangleFlatButton:
+                    text:'Submit'
+                    pos_hint:{'center_x':0.5,'center_y':0.2} 
+                    width:300
+                    on_release:
+                        root.data_submit()
+            BoxLayout:        
+                MDRectangleFlatButton:
+                    text:'Back'
+                    pos_hint:{'center_x':0.2,'center_y':0.2} 
+                    width:300
+                    on_release:
+                        root.manager.current='mangerlog'
 
 
 
@@ -1127,375 +1149,137 @@ ScreenManager:
     
 <viewsch>
     name:'views'
-    MDToolbar:
-        title:'Class Schedule'
-        elevation: 10
-        pos_hint: {'top': 1}
-    BoxLayout:
-        orientation:'horizontal'
-        MDLabel:
-            id:sunday
-            text:'Sunday'
-            size_hint_x:0.1
-            size_hint_y:0.1
-            pos_hint:{'center_x':0.1,'center_y':0.85}
-            
-        
-            
-        MDLabel:
-            id:mon
-            text:'Monday'
-            size_hint_x:0.1
-            size_hint_y:0.1
-            pos_hint:{'center_x':0.2,'center_y':0.85}
-            
-        MDLabel:
-            id:tue
-            text:'Tuesday'
-            size_hint_x:0.1
-            size_hint_y:0.1
-            pos_hint:{'center_x':0.3,'center_y':0.85}
-            
-        MDLabel:
-            id:wed
-            text:'Wednesday'
-            size_hint_x:0.1
-            size_hint_y:0.1
-            pos_hint:{'center_x':0.4,'center_y':0.85}
-           
-        MDLabel:
-            id:th
-            text:'Thursday'
-            size_hint_x:0.1
-            size_hint_y:0.1
-            pos_hint:{'center_x':0.5,'center_y':0.85}
-            
-        MDLabel:
-            id:tim
-            text:'Time'
-            size_hint_x:0.1
-            size_hint_y:0.1
-            pos_hint:{'center_x':0.6,'center_y':0.85}
-            
-    BoxLayout:
-        orientation:'horizontal'
-        MDLabel:
-            id:s1
-            text:
-            size_hint_x:0.1
-            size_hint_y:0.1
-            pos_hint:{'center_x':0.1,'center_y':0.75}
-            
-        
-            
-        MDLabel:
-            id:m1
-            text:
-            size_hint_x:0.1
-            size_hint_y:0.1
-            pos_hint:{'center_x':0.2,'center_y':0.75}
-            
-        MDLabel:
-            id:t1
-            text:
-            size_hint_x:0.1
-            size_hint_y:0.1
-            pos_hint:{'center_x':0.3,'center_y':0.75}
-            
-        MDLabel:
-            id:w1
-            text:
-            size_hint_x:0.1
-            size_hint_y:0.1
-            pos_hint:{'center_x':0.4,'center_y':0.75}
-           
-        MDLabel:
-            id:th1
-            text:
-            size_hint_x:0.1
-            size_hint_y:0.1
-            pos_hint:{'center_x':0.5,'center_y':0.75}
-            
-        MDLabel:
-            id:ti1
-            text:'8:00'
-            size_hint_x:0.1
-            size_hint_y:0.1
-            pos_hint:{'center_x':0.6,'center_y':0.75}
-            
-    BoxLayout:
-        orientation:'horizontal'
-        MDLabel:
-            id:s2
-            text:
-            size_hint_x:0.1
-            size_hint_y:0.1
-            pos_hint:{'center_x':0.1,'center_y':0.65}
-            
-        
-            
-        MDLabel:
-            id:m2
-            text:
-            size_hint_x:0.1
-            size_hint_y:0.1
-            pos_hint:{'center_x':0.2,'center_y':0.65}
-            
-        MDLabel:
-            id:t2
-            text:
-            size_hint_x:0.1
-            size_hint_y:0.1
-            pos_hint:{'center_x':0.3,'center_y':0.65}
-            
-        MDLabel:
-            id:w2
-            text:
-            size_hint_x:0.1
-            size_hint_y:0.1
-            pos_hint:{'center_x':0.4,'center_y':0.65}
-           
-        MDLabel:
-            id:th2
-            text:
-            size_hint_x:0.1
-            size_hint_y:0.1
-            pos_hint:{'center_x':0.5,'center_y':0.65}
-            
-        MDLabel:
-            id:ti2
-            text:'8:45'
-            size_hint_x:0.1
-            size_hint_y:0.1
-            pos_hint:{'center_x':0.6,'center_y':0.65}
-            
-    BoxLayout:
-        orientation:'horizontal'
-        MDLabel:
-            id:s3
-            text:
-            size_hint_x:0.1
-            size_hint_y:0.1
-            pos_hint:{'center_x':0.1,'center_y':0.55}
-            
-        
-            
-        MDLabel:
-            id:m3
-            text:
-            size_hint_x:0.1
-            size_hint_y:0.1
-            pos_hint:{'center_x':0.2,'center_y':0.55}
-            
-        MDLabel:
-            id:t3
-            text:
-            size_hint_x:0.1
-            size_hint_y:0.1
-            pos_hint:{'center_x':0.3,'center_y':0.55}
-            
-        MDLabel:
-            id:w3
-            text:
-            size_hint_x:0.1
-            size_hint_y:0.1
-            pos_hint:{'center_x':0.4,'center_y':0.55}
-           
-        MDLabel:
-            id:th3
-            text:
-            size_hint_x:0.1
-            size_hint_y:0.1
-            pos_hint:{'center_x':0.5,'center_y':0.55}
-            
-        MDLabel:
-            id:ti3
-            text:'9:15'
-            size_hint_x:0.1
-            size_hint_y:0.1
-            pos_hint:{'center_x':0.6,'center_y':0.55}
-            
-    BoxLayout:
-        orientation:'horizontal'
-        MDLabel:
-            id:s4
-            text:
-            size_hint_x:0.1
-            size_hint_y:0.1
-            pos_hint:{'center_x':0.1,'center_y':0.45}
-            
-        
-            
-        MDLabel:
-            id:m4
-            text:
-            size_hint_x:0.1
-            size_hint_y:0.1
-            pos_hint:{'center_x':0.2,'center_y':0.45}
-            
-        MDLabel:
-            id:t4
-            text:
-            size_hint_x:0.1
-            size_hint_y:0.1
-            pos_hint:{'center_x':0.3,'center_y':0.45}
-            
-        MDLabel:
-            id:w4
-            text:
-            size_hint_x:0.1
-            size_hint_y:0.1
-            pos_hint:{'center_x':0.4,'center_y':0.45}
-           
-        MDLabel:
-            id:th4
-            text:
-            size_hint_x:0.1
-            size_hint_y:0.1
-            pos_hint:{'center_x':0.5,'center_y':0.45}
-            
-        MDLabel:
-            id:ti4
-            text:'10:15'
-            size_hint_x:0.1
-            size_hint_y:0.1
-            pos_hint:{'center_x':0.6,'center_y':0.45}
+
+                    
+<clsspress>
+    name:'clssp'
+    NavigationLayout:
+        ScreenManager:
+            Screen:
+                BoxLayout:
+                    orientation:'vertical'
+                    MDToolbar:
+                        title:'Present Check'
+                        left_action_items:[["menu",lambda x: nav_drawer.toggle_nav_drawer()]]
+                        elevation:8
+                    BoxLayout:
+                        ScrollView:
+                            MDList:
+                                id:studlist
+
+                    Widget:
+
+        MDNavigationDrawer:
+            id: nav_drawer
+
+            BoxLayout:
+                orientation:'vertical'
+
+                spacing: '8dp'
+                padding: '8dp'
+                Image:
+                    source:'sce.jpg'
+
+
+                MDLabel:
+                    id:username
+                    text:
+                    font_style:'Caption'
+                    size_hint_y: None
+                    height: self.texture_size[1]
+
+                ScrollView:
+                    MDList:
+
+                        OneLineIconListItem:
+                            text:'My Grades'
+                            on_release:
+                                root.my_grades() 
+                            IconLeftWidget:
+                                icon:'clipboard-list'
+                        OneLineIconListItem:
+                            text:'My Messages'
+                            IconLeftWidget:
+                                icon:'message'
+                        OneLineIconListItem:
+                            text:'Home Page'
+                            on_press:
+                                root.home_button()
+                            IconLeftWidget:
+                                icon:'home'                                 
+                        OneLineIconListItem:
+                            text:'Log Out'
+                            on_press:
+                                root.manager.current='menu'
+                            IconLeftWidget:
+                                icon:'logout'   
+                                
+                                
+                                
+<clsch>
+    name:'clsh'
+    NavigationLayout:
+        ScreenManager:
+            Screen:
+                BoxLayout:
+                    orientation:'vertical'
+                    MDToolbar:
+                        title:'Present Check'
+                        left_action_items:[["menu",lambda x: nav_drawer.toggle_nav_drawer()]]
+                        elevation:8
+                    BoxLayout:
+                        ScrollView:
+                            MDList:
+                                id:sun
                         
-    BoxLayout:
-        orientation:'horizontal'
-        MDLabel:
-            id:s5
-            text:
-            size_hint_x:0.1
-            size_hint_y:0.1
-            pos_hint:{'center_x':0.1,'center_y':0.35}
+                        ScrollView:
+                            MDList:
+                                id:mon
+                        
+                        ScrollView:
+                            MDList:
+                                id:tue
+                        
+                        ScrollView:
+                            MDList:
+                                id:wed
+                                
+                        ScrollView:
+                            MDList:
+                                id:thu
+
+                        
+                        
+
+                    
+
+        MDNavigationDrawer:
+            id: nav_drawer
+
+            BoxLayout:
+                orientation:'vertical'
+
+                spacing: '8dp'
+                padding: '8dp'
+                Image:
+                    source:'sce.jpg'
+
             
-        
-            
-        MDLabel:
-            id:m5
-            text:
-            size_hint_x:0.1
-            size_hint_y:0.1
-            pos_hint:{'center_x':0.2,'center_y':0.35}
-            
-        MDLabel:
-            id:t5
-            text:
-            size_hint_x:0.1
-            size_hint_y:0.1
-            pos_hint:{'center_x':0.3,'center_y':0.35}
-            
-        MDLabel:
-            id:w5
-            text:
-            size_hint_x:0.1
-            size_hint_y:0.1
-            pos_hint:{'center_x':0.4,'center_y':0.35}
-           
-        MDLabel:
-            id:th5
-            text:
-            size_hint_x:0.1
-            size_hint_y:0.1
-            pos_hint:{'center_x':0.5,'center_y':0.35}
-            
-        MDLabel:
-            id:ti5
-            text:'11:30'
-            size_hint_x:0.1
-            size_hint_y:0.1
-            pos_hint:{'center_x':0.6,'center_y':0.35}
+               
+                ScrollView:
+                    MDList:
+
+                        OneLineIconListItem:
+                            text:'Home Page'
+                            on_press:
+                                root.home_button()
+                            IconLeftWidget:
+                                icon:'home'                                 
+                        OneLineIconListItem:
+                            text:'Log Out'
+                            on_press:
+                                root.manager.current='menu'
+                            IconLeftWidget:
+                                icon:'logout'   
     
-    BoxLayout:
-        orientation:'horizontal'
-        MDLabel:
-            id:s6
-            text:
-            size_hint_x:0.1
-            size_hint_y:0.1
-            pos_hint:{'center_x':0.1,'center_y':0.25}
-            
-        
-            
-        MDLabel:
-            id:m6
-            text:
-            size_hint_x:0.1
-            size_hint_y:0.1
-            pos_hint:{'center_x':0.2,'center_y':0.25}
-            
-        MDLabel:
-            id:t6
-            text:
-            size_hint_x:0.1
-            size_hint_y:0.1
-            pos_hint:{'center_x':0.3,'center_y':0.25}
-            
-        MDLabel:
-            id:w6
-            text:
-            size_hint_x:0.1
-            size_hint_y:0.1
-            pos_hint:{'center_x':0.4,'center_y':0.25}
-           
-        MDLabel:
-            id:th6
-            text:
-            size_hint_x:0.1
-            size_hint_y:0.1
-            pos_hint:{'center_x':0.5,'center_y':0.25}
-            
-        MDLabel:
-            id:ti6
-            text:'12:15'
-            size_hint_x:0.1
-            size_hint_y:0.1
-            pos_hint:{'center_x':0.6,'center_y':0.25}
-    BoxLayout:
-        orientation:'horizontal'
-        MDLabel:
-            id:s7
-            text:
-            size_hint_x:0.1
-            size_hint_y:0.1
-            pos_hint:{'center_x':0.1,'center_y':0.15}
-            
-        
-            
-        MDLabel:
-            id:m7
-            text:
-            size_hint_x:0.1
-            size_hint_y:0.1
-            pos_hint:{'center_x':0.2,'center_y':0.15}
-            
-        MDLabel:
-            id:t7
-            text:
-            size_hint_x:0.1
-            size_hint_y:0.1
-            pos_hint:{'center_x':0.3,'center_y':0.15}
-            
-        MDLabel:
-            id:w7
-            text:
-            size_hint_x:0.1
-            size_hint_y:0.1
-            pos_hint:{'center_x':0.4,'center_y':0.15}
-           
-        MDLabel:
-            id:th7
-            text:
-            size_hint_x:0.1
-            size_hint_y:0.1
-            pos_hint:{'center_x':0.5,'center_y':0.15}
-            
-        MDLabel:
-            id:ti7
-            text:'13:00'
-            size_hint_x:0.1
-            size_hint_y:0.1
-            pos_hint:{'center_x':0.6,'center_y':0.15}
-            
 """
