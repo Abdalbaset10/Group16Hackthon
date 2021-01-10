@@ -48,28 +48,7 @@ class TestUser(unittest.TestCase):
         self.assertNotEqual('123456',currentUser('abd10'),"not the username of this id")
 
 
-class myapptest(GraphicUnitTest):
-    def test_widget(self):
-        from myapp import school
-        from kivy.uix.button import Button
 
-        button=Button()
-        school()
-
-        from kivy.base import EventLoop
-        EventLoop.ensure_window()
-        window=EventLoop.window
-
-        self.assertEqual(window.children[0],button)
-        self.assertEqual(window.children[0].height,window.height)
-
-class MyButton(Button):
-    from myapp import school
-    def __init__(self, **kwargs):
-        super(self.school, self).__init__(**kwargs)
-        self.text = 'Hello Test'
-        app = self.get_root_window()
-        app.my_button = self
 
 
 if __name__ == '__main__':
