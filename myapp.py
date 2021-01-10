@@ -79,50 +79,47 @@ def invalidForm():
     dialog.open()
 
 def changedsucc():
-    pop = Popup(title='Succeded', content=Label(text='Password changed successfully'),
-                size_hint=(None, None), size=(400, 400))
+    pop = MDDialog(title='Succeded!Password changed successfully')
+
     pop.open()
 
 
 def invalidinFormation():
-    dialog = MDDialog(title='invalid Form')
-    close_button = MDFlatButton(text='Close', on_release=dialog.dismiss())
-    dialog.open()
+    pop = MDDialog(title='Succeded!Password changed successfully')
+    pop.open()
 
 
 def no_user():
-    pop = Popup(title='Error!', content=Label(text='This user does not exist'),
-                size_hint=(None, None), size=(400, 400))
+    pop = MDDialog(title='Error!This user does not exist')
+
     pop.open()
 
 
 def deletedS():
-    pop = Popup(title='Success!', content=Label(text='This user has been deleted'),
-                size_hint=(None, None), size=(400, 400))
+    pop =MDDialog(title='user has been deleted!')
+
     pop.open()
 
 
 def IsnowTeacher():
-    pop = Popup(title='Success!', content=Label(text='This user has promoted to teacher'),
-                size_hint=(None, None), size=(400, 400))
+    pop = MDDialog(title='Success!This user has promoted to teacher')
     pop.open()
 
 
 def namechanged():
-    pop = Popup(title='Success!', content=Label(text='Name changed successfully reloggin to see the change'),
-                size_hint=(None, None), size=(400, 400))
+    pop = MDDialog(title='Success!Name changed successfully reloggin to see the change')
+
     pop.open()
 
 
 def dobchanged():
-    pop = Popup(title='Success!', content=Label(text='Date of birth changed successfully reloggin to see the change'),
-                size_hint=(None, None), size=(400, 400))
+    pop = MDDialog(title='Success!Date of birth changed successfully reloggin to see the change')
+
     pop.open()
 
 
 def gradechanged():
-    pop = Popup(title='Success!', content=Label(text='grade has been changed'),
-                size_hint=(None, None), size=(400, 400))
+    pop = MDDialog(title='Success!grade has been changed')
     pop.open()
 
 
