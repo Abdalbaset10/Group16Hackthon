@@ -8,7 +8,7 @@ from kivy.properties import ObjectProperty
 from kivy.properties import StringProperty
 from kivy.uix.screenmanager import Screen, ScreenManager
 from kivymd.uix.dialog import MDDialog
-from kivymd.uix.list import OneLineListItem,TwoLineListItem
+from kivymd.uix.list import OneLineListItem, TwoLineListItem
 from kivymd.uix.button import MDFlatButton
 import pyrebase
 from datetime import datetime
@@ -43,6 +43,7 @@ def find_user(user):
     else:
         return 0
 
+
 def username_exist(user):
     users = db.child("users").get()
     user_found = 0
@@ -53,6 +54,7 @@ def username_exist(user):
         return 1
     else:
         return 0
+
 
 def currentUser(username):
     user = db.child("users").get()
@@ -73,56 +75,53 @@ def grantAccess(username, password):
 
 
 def invalidForm():
-
-    dialog=MDDialog(title='invalid Form')
-    close_button = MDFlatButton(text='Close', on_release=dialog.dismiss())
-    dialog.open()
-
-def changedsucc():
-    pop = Popup(title='Succeded', content=Label(text='Password changed successfully'),
-                size_hint=(None, None), size=(400, 400))
-    pop.open()
-
-
-def invalidinFormation():
     dialog = MDDialog(title='invalid Form')
     close_button = MDFlatButton(text='Close', on_release=dialog.dismiss())
     dialog.open()
 
 
+def changedsucc():
+    pop = MDDialog(title='Succeded!Password changed successfully')
+
+    pop.open()
+
+
+def invalidinFormation():
+    pop = MDDialog(title='Succeded!Password changed successfully')
+    pop.open()
+
+
 def no_user():
-    pop = Popup(title='Error!', content=Label(text='This user does not exist'),
-                size_hint=(None, None), size=(400, 400))
+    pop = MDDialog(title='Error!This user does not exist')
+
     pop.open()
 
 
 def deletedS():
-    pop = Popup(title='Success!', content=Label(text='This user has been deleted'),
-                size_hint=(None, None), size=(400, 400))
+    pop = MDDialog(title='user has been deleted!')
+
     pop.open()
 
 
 def IsnowTeacher():
-    pop = Popup(title='Success!', content=Label(text='This user has promoted to teacher'),
-                size_hint=(None, None), size=(400, 400))
+    pop = MDDialog(title='Success!This user has promoted to teacher')
     pop.open()
 
 
 def namechanged():
-    pop = Popup(title='Success!', content=Label(text='Name changed successfully reloggin to see the change'),
-                size_hint=(None, None), size=(400, 400))
+    pop = MDDialog(title='Success!Name changed successfully reloggin to see the change')
+
     pop.open()
 
 
 def dobchanged():
-    pop = Popup(title='Success!', content=Label(text='Date of birth changed successfully reloggin to see the change'),
-                size_hint=(None, None), size=(400, 400))
+    pop = MDDialog(title='Success!Date of birth changed successfully reloggin to see the change')
+
     pop.open()
 
 
 def gradechanged():
-    pop = Popup(title='Success!', content=Label(text='grade has been changed'),
-                size_hint=(None, None), size=(400, 400))
+    pop = MDDialog(title='Success!grade has been changed')
     pop.open()
 
 
@@ -133,7 +132,7 @@ class MenuScreen(Screen):
 class MangerLog(Screen):
     def home_button(self):
         self.manager.current = 'mangerlog'
-        print(self.manager.screens[7].ids)
+
 
     def my_profile(self):
         self.manager.screens[7].build()
@@ -164,7 +163,7 @@ class MyProfile(Screen):
     def home_button(self):
         user_key = currentUser(str(self.manager.screens[2].ids.username.text))
         user = db.child("users").child(user_key).get()
-        print(user_key)
+
         logto = 0
         if str('Teacher') == str(user.val()['Title']):
             logto = 1
@@ -303,7 +302,7 @@ class MangerDuser(Screen):
     idnum = ObjectProperty(None)
 
     def deletebtn(self):
-        print(str(self.idnum.text))
+
         if find_user(str(self.idnum.text)) == 0:
             no_user()
         else:
@@ -323,7 +322,7 @@ class Change_Name(Screen):
     def back_button(self):
         user_key = currentUser(str(self.ids.username.text))
         user = db.child("users").child(user_key).get()
-        print(user_key)
+
         logto = 0
         if str('Teacher') == str(user.val()['Title']):
             logto = 1
@@ -386,13 +385,14 @@ class RegiWindo(Screen):
     password_box = ObjectProperty(None)
 
     def regibtn(self):
-        print(self.id_box.text)
-        print(find_user(str(self.id_box.text)))
+
+
         if self.id_box.text != '' and self.fullname_box.text != '' and self.dob.text != '' and self.username_box.text != '' and self.password_box.text != '':
             if find_user(str(self.id_box.text)) == 0 and username_exist(self.ids.username.text) == 0:
-                GradeData={'Math':'None','Arabic':'None','Sport':'None','ComputerS':'None'}
+                GradeData = {'Math': 'None', 'Arabic': 'None', 'Sport': 'None', 'ComputerS': 'None'}
                 users_data = {'Name': self.fullname_box.text, 'IDnum': self.id_box.text,
-                              'Username': self.username_box.text, 'DOB': self.dob.text, 'pass': self.password_box.text,'Grades':GradeData,'Class':'11',
+                              'Username': self.username_box.text, 'DOB': self.dob.text, 'pass': self.password_box.text,
+                              'Grades': GradeData, 'Class': '11',
                               'Title': str('Student')}
                 db.child("users").child(str(self.id_box.text)).set(users_data)
                 if str(self.id_box.text) == ("315198564"):
@@ -403,16 +403,19 @@ class RegiWindo(Screen):
 
         else:
 
-           self.empty()
-
+            self.empty()
 
     def empty(self):
-        dialog=MDDialog(title='you forgot to fill one of the boxes')
+        dialog = MDDialog(title='you forgot to fill one of the boxes')
         dialog.open()
+
     def sameuser(self):
-        dialog=MDDialog(title='you enterd an Existing ID or Username')
+        dialog = MDDialog(title='you enterd an Existing ID or Username')
         dialog.open()
+
     pass
+
+
 class PassReset(Screen):
     def resetPass(self):
         if find_user(str(self.ids.IDnum.text)) == 0:
@@ -446,7 +449,7 @@ class Loginwindo(Screen):
 
             self.manager.screens[4].ids.teachername.title = 'Welcome' + ' ' + user.val()['Name']
 
-            print(self.manager.screens[16].ids)
+
             ###Page 9 change name ###
             self.manager.screens[9].ids.username.text = user.val()['Username']
 
@@ -474,14 +477,13 @@ class Loginwindo(Screen):
         else:
             self.invalid()
 
-
     def invalid(self):
         dialog = MDDialog(title='Wrong Username or password')
         dialog.open()
 
-
-
     pass
+
+
 ###if grantAccess(str(self.username_box.text), str(self.password_box.text)) == 0:
 
 class reportprob(Screen):
@@ -499,9 +501,10 @@ class reportprob(Screen):
 
 
 class ManagClass(Screen):
-    menu=ObjectProperty(None)
+    menu = ObjectProperty(None)
+
     def build(self):
-        print("we arrived")
+
         daylist = ["sunday", "monday", "tuesday", "wednesday", "thursday"]
         timelist = ["8:00", "8:45", "9:30", "10:15", "11:30", "12:45", "13:30"]
         for i in daylist:
@@ -515,14 +518,17 @@ class ManagClass(Screen):
             self.manager.screens[16].ids.menutime.add_widget(items)
 
     def set_itemtime(self, text_of_the_option):
-        self.manager.screens[16].ids.timepicked.text=text_of_the_option.text
-    def set_itemday(self,text_of_the_option):
-        self.manager.screens[16].ids.daypicked.text = text_of_the_option.text
-    def data_submit(self):
-        teachersub=db.child("users").child(self.manager.screens[16].ids.idt.text).get()
-        print(teachersub.val()['Subject'])
-        db.child("Class").child(self.manager.screens[16].ids.classid.text).child("Schedule").child(str(self.manager.screens[16].ids.daypicked.text)).child(str(self.manager.screens[16].ids.timepicked.text)).set(teachersub.val()['Subject'])
+        self.manager.screens[16].ids.timepicked.text = text_of_the_option.text
 
+    def set_itemday(self, text_of_the_option):
+        self.manager.screens[16].ids.daypicked.text = text_of_the_option.text
+
+    def data_submit(self):
+        teachersub = db.child("users").child(self.manager.screens[16].ids.idt.text).get()
+
+        db.child("Class").child(self.manager.screens[16].ids.classid.text).child("Schedule").child(
+            str(self.manager.screens[16].ids.daypicked.text)).child(
+            str(self.manager.screens[16].ids.timepicked.text)).set(teachersub.val()['Subject'])
 
 
 class annonman(Screen):
@@ -542,9 +548,27 @@ class pageann(Screen):
         self.manager.screens[18].ids.reanno.text = 'From' + 'School principal:" ' + anno.val()['text'] + '"'
         self.manager.screens[18].ids.retime.text = anno.val()['Date']
 
+    def home_button(self):
+        user_key = currentUser(str(self.manager.screens[2].ids.username.text))
+        user = db.child("users").child(user_key).get()
+
+        logto = 0
+        if str('Teacher') == str(user.val()['Title']):
+            logto = 1
+        if str('Manager') == str(user.val()['Title']):
+            logto = 2
+        if str('Student') == str(user.val()['Title']):
+            logto = 3
+        if logto == 1:
+            self.manager.current = 'teacherlog'
+
+        if logto == 2:
+            self.manager.current = 'mangerlog'
+        if logto == 3:
+            self.manager.current = 'Spage'
+
 
 class viewsch(Screen):
-
     pass
 
 
@@ -561,51 +585,54 @@ class clsspress(Screen):
             self.manager.screens[20].ids.studlist.add_widget(items)
 
     def present(self, text):
-        thisuser=db.child("users").get()
+        thisuser = db.child("users").get()
         for u in thisuser.each():
             if u.val()["Username"] == str(text.text):
-                db.child("users").child(str(u.key())).child("present").child(self.tnow.strftime("%d,%m,%Y, %H:%M:%S")).set("checked")
+                db.child("users").child(str(u.key())).child("present").child(
+                    self.tnow.strftime("%d,%m,%Y, %H:%M:%S")).set("checked")
+
     def home_button(self):
         self.manager.screens[20].ids.studlist.clear_widgets()
         self.manager.current = 'teacherlog'
 
     pass
 
+
 class clsch(Screen):
     def build(self):
-        thisstudent=currentUser(self.manager.screens[2].ids.username.text)
-        currentS=db.child("users").child(thisstudent).get()
+        thisstudent = currentUser(self.manager.screens[2].ids.username.text)
+        currentS = db.child("users").child(thisstudent).get()
 
-        day1=db.child("Class").child(currentS.val()['Class']).child("Schedule").child("sunday").get()
-        day2=db.child("Class").child(currentS.val()['Class']).child("Schedule").child("monday").get()
-        day3=db.child("Class").child(currentS.val()['Class']).child("Schedule").child("tuesday").get()
-        day4=db.child("Class").child(currentS.val()['Class']).child("Schedule").child("wednesday").get()
-        day5=db.child("Class").child(currentS.val()['Class']).child("Schedule").child("thursday").get()
-        sunday=OneLineListItem(text=str("(Sunday)"))
+        day1 = db.child("Class").child(currentS.val()['Class']).child("Schedule").child("sunday").get()
+        day2 = db.child("Class").child(currentS.val()['Class']).child("Schedule").child("monday").get()
+        day3 = db.child("Class").child(currentS.val()['Class']).child("Schedule").child("tuesday").get()
+        day4 = db.child("Class").child(currentS.val()['Class']).child("Schedule").child("wednesday").get()
+        day5 = db.child("Class").child(currentS.val()['Class']).child("Schedule").child("thursday").get()
+        sunday = OneLineListItem(text=str("(Sunday)"))
         self.manager.screens[21].ids.sun.add_widget(sunday)
-        monday=OneLineListItem(text=str("(monday)"))
+        monday = OneLineListItem(text=str("(monday)"))
         self.manager.screens[21].ids.mon.add_widget(monday)
-        tuesday=OneLineListItem(text=str("(tuesday)"))
+        tuesday = OneLineListItem(text=str("(tuesday)"))
         self.manager.screens[21].ids.tue.add_widget(tuesday)
-        wednesday=OneLineListItem(text=str("(wednesday)"))
+        wednesday = OneLineListItem(text=str("(wednesday)"))
         self.manager.screens[21].ids.wed.add_widget(wednesday)
-        thursday=OneLineListItem(text=str("(thursday)"))
+        thursday = OneLineListItem(text=str("(thursday)"))
         self.manager.screens[21].ids.thu.add_widget(thursday)
 
         for i in day1.each():
-            items = TwoLineListItem(text=str(i.val()),secondary_text=str(i.key()))
+            items = TwoLineListItem(text=str(i.val()), secondary_text=str(i.key()))
             self.manager.screens[21].ids.sun.add_widget(items)
         for i in day2.each():
-            items = TwoLineListItem(text=str(i.val()),secondary_text=str(i.key()))
+            items = TwoLineListItem(text=str(i.val()), secondary_text=str(i.key()))
             self.manager.screens[21].ids.mon.add_widget(items)
         for i in day3.each():
-            items = TwoLineListItem(text=str(i.val()),secondary_text=str(i.key()))
+            items = TwoLineListItem(text=str(i.val()), secondary_text=str(i.key()))
             self.manager.screens[21].ids.tue.add_widget(items)
         for i in day4.each():
-            items = TwoLineListItem(text=str(i.val()),secondary_text=str(i.key()))
+            items = TwoLineListItem(text=str(i.val()), secondary_text=str(i.key()))
             self.manager.screens[21].ids.wed.add_widget(items)
         for i in day5.each():
-            items = TwoLineListItem(text=str(i.val()),secondary_text=str(i.key()))
+            items = TwoLineListItem(text=str(i.val()), secondary_text=str(i.key()))
             self.manager.screens[21].ids.thu.add_widget(items)
 
     def home_button(self):
@@ -617,6 +644,7 @@ class clsch(Screen):
         self.manager.current = 'Spage'
 
     pass
+
 
 class school(MDApp):
     def build(self):

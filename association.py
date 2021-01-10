@@ -1141,6 +1141,49 @@ ScreenManager:
         pos_hint:{'center_x':0.5,'center_y':0.8}
         size_hint_x:None
         width:300
+    NavigationLayout:
+        ScreenManager:
+            Screen:
+                BoxLayout:
+                    orientation:'vertical'
+                    MDToolbar:
+                        id:studenttoolbar
+                        title:
+                        left_action_items:[["menu",lambda x: nav_drawer.toggle_nav_drawer()]]
+                        elevation:8
+                    Widget:          
+        MDNavigationDrawer:
+            id: nav_drawer
+
+            BoxLayout:
+                orientation:'vertical'
+
+                spacing: '8dp'
+                padding: '8dp'
+                Image:
+                    source:'sce.jpg'
+
+
+                MDLabel:
+                    text:'Announcement From School Principal'
+                    font_style:'Caption'
+                    size_hint_y: None
+                    height: self.texture_size[1]
+
+                ScrollView:
+                    MDList:
+                        OneLineIconListItem:
+                            text:'Home Page'
+                            on_press:
+                                root.home_button()
+                            IconLeftWidget:
+                                icon:'home'                                      
+                        OneLineIconListItem:
+                            text:'Log Out'
+                            on_press:
+                                root.manager.current='menu'
+                            IconLeftWidget:
+                                icon:'logout'
 
 
 <viewsch>
