@@ -29,3 +29,6 @@ developer team:
 Morad al teaha
 Abdalbaset abo scoot
 Noor watad
+
+Data base has been killed on 20/01/2020;
+project has been done and delivered it's no longer available and will not recieve further updates.
